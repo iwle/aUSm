@@ -1,0 +1,40 @@
+package com.github.iwle.ausm
+
+import android.os.Bundle
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+
+class MainActivity : FragmentActivity() {
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager: ViewPager2
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        initialiseTabPagerAdapter()
+    }
+
+    private fun initialiseTabPagerAdapter() {
+        tabLayout = findViewById(R.id.tab_layout)
+        viewPager = findViewById(R.id.tab_view_pager)
+        val tabFragmentList = arrayListOf(MapFragment(), ReviewFragment())
+        val tabPagerAdapter = TabPagerAdapter(this, tabFragmentList)
+        viewPager.adapter = tabPagerAdapter
+        tabLayout.addOnTabSelectedListener(object :
+            TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                viewPager.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                // Do nothing
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                // Do nothing
+            }
+        })
+    }
+}
