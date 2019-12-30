@@ -1,16 +1,19 @@
 package com.github.iwle.ausm
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-class ReviewFragment : Fragment() {
+class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var reviewListAdapter: ReviewListAdapter
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     companion object {
         fun newInstance() : ReviewFragment {
@@ -24,11 +27,17 @@ class ReviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val v = inflater.inflate(R.layout.fragment_review, container, false)
-        setUpList(v)
+        swipeRefreshLayout = v.findViewById(R.id.swipe_refresh_layout)
+        swipeRefreshLayout.setOnRefreshListener(this)
+        fetchData()
+        recyclerView = v.findViewById<RecyclerView>(R.id.recycler_view).apply {
+            layoutManager = LinearLayoutManager(this.context)
+            adapter = reviewListAdapter
+        }
         return v
     }
 
-    private fun setUpList(v: View) {
+    private fun fetchData() {
         // Fake data for testing UI
         val data = ArrayList<Establishment>()
         data.add(Establishment("https://images-na.ssl-images-amazon.com/images/I/81zfHiBLQBL._SX466_.jpg", "Pomeranian", "20 Clementi Ave 5", 4.8))
@@ -37,9 +46,17 @@ class ReviewFragment : Fragment() {
         data.add(Establishment("https://media-cdn.tripadvisor.com/media/photo-s/02/39/56/bd/side-entrance.jpg", "Starbucks","Plaza Singapura", 4.1))
         data.add(Establishment("https://images-na.ssl-images-amazon.com/images/I/81zfHiBLQBL._SX466_.jpg", "Another Pomeranian", "lorem ipsum", 4.9))
         reviewListAdapter = ReviewListAdapter(data)
-        recyclerView = v.findViewById<RecyclerView>(R.id.recycler_view).apply {
-            layoutManager = LinearLayoutManager(this.context)
-            adapter = reviewListAdapter
+
+        // Stop the refresh animation
+        val runnable = Runnable {
+            if(swipeRefreshLayout.isRefreshing) {
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
+        Handler().postDelayed(runnable, 1000)
+    }
+
+    override fun onRefresh() {
+        fetchData()
     }
 }
