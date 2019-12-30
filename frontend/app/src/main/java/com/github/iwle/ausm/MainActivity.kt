@@ -36,5 +36,7 @@ class MainActivity : FragmentActivity() {
                 // Do nothing
             }
         })
+        // Disable swiping of view pager
+        viewPager.isUserInputEnabled = false
     }
 }
