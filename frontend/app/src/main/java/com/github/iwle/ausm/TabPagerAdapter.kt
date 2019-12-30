@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class TabPagerAdapter(
     fa: FragmentActivity,
-    private val fragmentList: ArrayList<Fragment>
+    private val fragmentList: List<Fragment>
 ) : FragmentStateAdapter(fa) {
     override fun createFragment(position: Int): Fragment {
         return fragmentList[position]

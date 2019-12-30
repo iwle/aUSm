@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">aUSm</string>
+    <string name="tab_gps">GPS Tracker</string>
+    <string name="tab_reviews">Reviews</string>
 </resources>
