@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : FragmentActivity() {
@@ -31,6 +32,8 @@ class MainActivity : FragmentActivity() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewPager.currentItem = tab.position
                 toolbar.title = tabNameList[tab.position]
+                // Show app bar when tab is selected
+                findViewById<AppBarLayout>(R.id.app_bar_layout)?.setExpanded(true, true)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -38,7 +41,8 @@ class MainActivity : FragmentActivity() {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                // Do nothing
+                // Show app bar when tab is reselected
+                findViewById<AppBarLayout>(R.id.app_bar_layout)?.setExpanded(true, true)
             }
         })
         // Disable swiping of view pager

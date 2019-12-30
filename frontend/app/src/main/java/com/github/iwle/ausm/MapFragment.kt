@@ -1,6 +1,7 @@
 package com.github.iwle.ausm
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
+        // Hide app bar when map is selected
         googleMap.setOnCameraMoveStartedListener {
             activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)?.setExpanded(false, true)
         }
