@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import kotlinx.android.synthetic.main.fragment_review.view.*
 
 class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var recyclerView: RecyclerView

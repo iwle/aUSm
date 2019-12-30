@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : FragmentActivity() {
@@ -34,6 +35,12 @@ class MainActivity : FragmentActivity() {
                 toolbar.title = tabNameList[tab.position]
                 // Show app bar when tab is selected
                 findViewById<AppBarLayout>(R.id.app_bar_layout)?.setExpanded(true, true)
+                // Show extended FAB for reviews only
+                if(tab.position == 0) {
+                    findViewById<ExtendedFloatingActionButton>(R.id.extended_floating_action_button).hide()
+                } else {
+                    findViewById<ExtendedFloatingActionButton>(R.id.extended_floating_action_button).show()
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
