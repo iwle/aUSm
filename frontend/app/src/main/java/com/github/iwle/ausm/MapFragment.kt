@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.material.appbar.AppBarLayout
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var googleMap: GoogleMap
@@ -39,6 +41,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
+        googleMap.setOnCameraMoveStartedListener {
+            activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)?.setExpanded(false, true)
+        }
     }
 
     // MapView does not load unless being touched without overriding onResume()
