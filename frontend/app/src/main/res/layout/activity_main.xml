@@ -52,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:text="@string/add_review"
+        android:visibility="gone"
         app:icon="@drawable/baseline_add_white_24"
         app:layout_anchor="@id/tab_view_pager"
         app:layout_anchorGravity="bottom|center"/>
