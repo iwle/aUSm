@@ -32,7 +32,7 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         swipeRefreshLayout = v.findViewById(R.id.swipe_refresh_layout)
         swipeRefreshLayout.setOnRefreshListener(this)
         // Set refresh animation colour cycle
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent)
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorSecondary)
         fetchData()
         recyclerView = v.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(this.context)
