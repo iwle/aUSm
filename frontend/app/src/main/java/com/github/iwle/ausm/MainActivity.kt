@@ -18,6 +18,9 @@ class MainActivity : FragmentActivity() {
         setContentView(R.layout.activity_main)
 
         initialiseTabPagerAdapter()
+
+        // Hide extended FAB initially
+        findViewById<ExtendedFloatingActionButton>(R.id.extended_floating_action_button).hide()
     }
 
     private fun initialiseTabPagerAdapter() {
