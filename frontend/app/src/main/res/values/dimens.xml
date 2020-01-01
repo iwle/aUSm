@@ -5,4 +5,8 @@
     <dimen name="card_corner_radius">4dp</dimen>
     <dimen name="card_divider">5dp</dimen>
     <dimen name="fab_margin">10dp</dimen>
+    <dimen name="add_review_margin">15dp</dimen>
+    <dimen name="chip_group_margin">8dp</dimen>
+    <dimen name="divider">1dp</dimen>
+    <dimen name="category_font_size">20sp</dimen>
 </resources>

@@ -35,4 +35,44 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="ReviewTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/category_font_size</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginLeft">@dimen/add_review_margin</item>
+        <item name="android:layout_marginRight">@dimen/add_review_margin</item>
+        <item name="android:layout_marginTop">@dimen/add_review_margin</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ReviewHorizontalScrollView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:layout_marginTop">@dimen/chip_group_margin</item>
+        <item name="android:layout_marginBottom">@dimen/chip_group_margin</item>
+    </style>
+
+    <style name="ReviewChipGroup" parent="Widget.MaterialComponents.ChipGroup">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">@dimen/add_review_margin</item>
+        <item name="android:paddingEnd">@dimen/add_review_margin</item>
+        <item name="singleSelection">true</item>
+        <item name="singleLine">true</item>
+    </style>
+
+    <style name="ReviewChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ReviewDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
 </resources>
