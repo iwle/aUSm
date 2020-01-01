@@ -3,6 +3,9 @@
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
     <string name="sign_in">Sign In</string>
+    <string name="login_field_missing">Please fill in all the fields</string>
+    <string name="login_success">Successfully logged in</string>
+    <string name="login_failure">Login failed</string>
     <string name="tab_gps">GPS Tracker</string>
     <string name="tab_reviews">Reviews</string>
     <string name="add_review">Add Review</string>
