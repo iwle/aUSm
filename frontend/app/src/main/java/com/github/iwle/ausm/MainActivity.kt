@@ -126,6 +126,8 @@ class MainActivity : FragmentActivity() {
 
         if(requestCode == pingActivityRequestCode && resultCode == Activity.RESULT_OK) {
             val place: Place? = PingPlacePicker.getPlace(data!!)
+
+            startActivity(Intent(this, AddReviewActivity::class.java))
         }
     }
 }
