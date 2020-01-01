@@ -111,7 +111,7 @@ class MainActivity : FragmentActivity() {
 
     private fun showPlacePicker() {
         val builder = PingPlacePicker.IntentBuilder()
-        builder.setAndroidApiKey(getString(R.string.google_places_key)).setMapsApiKey(getString(R.string.google_maps_key))
+        builder.setAndroidApiKey(getString(R.string.place_picker_places_key)).setMapsApiKey(getString(R.string.place_picker_maps_key))
 
         try {
             val placeIntent = builder.build(this)
