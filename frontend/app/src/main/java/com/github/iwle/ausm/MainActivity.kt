@@ -1,12 +1,16 @@
 package com.github.iwle.ausm
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.libraries.places.api.model.Place
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.tabs.TabLayout
+import com.rtchagas.pingplacepicker.PingPlacePicker
 import kotlin.math.abs
 
 class MainActivity : FragmentActivity() {
@@ -16,6 +20,7 @@ class MainActivity : FragmentActivity() {
     private lateinit var appBarLayout: AppBarLayout
     private lateinit var floatingActionButton: ExtendedFloatingActionButton
     private var isFabEnabled = false
+    private val pingActivityRequestCode = 1001
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +74,10 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun initialiseFloatingActionButton() {
+        // Open Place Picker on click
+        floatingActionButton.setOnClickListener {
+            showPlacePicker()
+        }
         // Hide extended FAB when toolbar is collapsed
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if(abs(verticalOffset) - appBarLayout!!.totalScrollRange == 0) {
@@ -98,5 +107,25 @@ class MainActivity : FragmentActivity() {
 
     private fun hideFab() {
         floatingActionButton.hide()
+    }
+
+    private fun showPlacePicker() {
+        val builder = PingPlacePicker.IntentBuilder()
+        builder.setAndroidApiKey(getString(R.string.google_places_key)).setMapsApiKey(getString(R.string.google_maps_key))
+
+        try {
+            val placeIntent = builder.build(this)
+            startActivityForResult(placeIntent, pingActivityRequestCode)
+        } catch(ex: Exception) {
+            // TODO: toast("Google Play Services is not Available")
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == pingActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            val place: Place? = PingPlacePicker.getPlace(data!!)
+        }
     }
 }
