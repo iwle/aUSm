@@ -86,4 +86,20 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_vertical_0.1"
         app:layout_constraintTop_toBottomOf="@+id/email_edit_text" />
 
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/login_button"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="@string/sign_in"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/login_button_text_size"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_0.9"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_0.1"
+        app:layout_constraintTop_toBottomOf="@+id/password_edit_text" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
