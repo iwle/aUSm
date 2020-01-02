@@ -9,9 +9,11 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="sign_up_prompt">Don\'t have an account? Sign up</string>
     <string name="log_in_prompt">Already have an account? Log in</string>
-    <string name="login_field_missing">Please fill in all the fields</string>
+    <string name="field_missing">Please fill in all the fields</string>
     <string name="login_success">Successfully logged in</string>
     <string name="login_failure">Login failed</string>
+    <string name="signup_success">Successfully registered</string>
+    <string name="signup_failure">Registration failed</string>
     <string name="email_missing">Please fill in your email</string>
     <string name="email_reset_success">Reset link sent to email successfully</string>
     <string name="email_reset_failure">Unable to send reset email</string>
