@@ -17,6 +17,8 @@ class LoginActivity : FragmentActivity() {
         setContentView(R.layout.activity_authenticate)
 
         viewPager = findViewById(R.id.authenticate_view_pager)
+        // Disable swiping
+        viewPager.isUserInputEnabled = false
         initialiseViewPager()
     }
 
