@@ -1,19 +1,13 @@
 package com.github.iwle.ausm
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : FragmentActivity() {
     private lateinit var viewPager: ViewPager2
@@ -27,7 +21,15 @@ class LoginActivity : FragmentActivity() {
     }
 
     private fun initialiseViewPager() {
-        val cardFragmentList = listOf(LoginFragment())
+        val bundle = Bundle()
+        bundle.putInt("viewPagerId", R.id.authenticate_view_pager)
+
+        val loginFragment = LoginFragment()
+        loginFragment.arguments = bundle
+        val signupFragment = SignupFragment()
+        signupFragment.arguments = bundle
+        val cardFragmentList = listOf(loginFragment, signupFragment)
+
         viewPager.adapter = TabPagerAdapter(this, cardFragmentList)
     }
 

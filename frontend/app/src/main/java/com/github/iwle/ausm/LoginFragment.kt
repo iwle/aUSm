@@ -9,14 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
+    private lateinit var viewPager: ViewPager2
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
+    private lateinit var signupTextView: TextView
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -24,14 +28,19 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val v = inflater.inflate(R.layout.view_login, container, false)
+        val v = inflater.inflate(R.layout.fragment_login, container, false)
+
+        val viewPagerId = arguments!!.getInt("viewPagerId")
+        viewPager = activity!!.findViewById(viewPagerId)
 
         emailEditText = v.findViewById(R.id.email_edit_text)
         passwordEditText = v.findViewById(R.id.password_edit_text)
         loginButton = v.findViewById(R.id.login_button)
+        signupTextView = v.findViewById(R.id.signup_text_view)
         auth = FirebaseAuth.getInstance()
 
         initialiseLogin()
+        initialiseSignUp()
 
         return v
     }
@@ -53,6 +62,12 @@ class LoginFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun initialiseSignUp() {
+        signupTextView.setOnClickListener {
+            viewPager.currentItem = 1
         }
     }
 }
