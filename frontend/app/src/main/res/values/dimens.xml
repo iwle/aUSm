@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="authentication_text_margin">3dp</dimen>
+    <dimen name="signup_horizontal_margin">3dp</dimen>
     <dimen name="card_margin">5dp</dimen>
     <dimen name="card_padding">16dp</dimen>
     <dimen name="card_corner_radius">4dp</dimen>

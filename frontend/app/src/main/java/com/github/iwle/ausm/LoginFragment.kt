@@ -67,7 +67,7 @@ class LoginFragment : Fragment() {
 
     private fun initialiseSignUp() {
         signupTextView.setOnClickListener {
-            viewPager.currentItem = 1
+            viewPager.currentItem++
         }
     }
 }
