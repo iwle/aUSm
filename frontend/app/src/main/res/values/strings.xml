@@ -3,6 +3,8 @@
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
     <string name="sign_in">Sign In</string>
+    <string name="sign_up">Register</string>
+    <string name="forgot_password">Forgot password?</string>
     <string name="login_field_missing">Please fill in all the fields</string>
     <string name="login_success">Successfully logged in</string>
     <string name="login_failure">Login failed</string>
