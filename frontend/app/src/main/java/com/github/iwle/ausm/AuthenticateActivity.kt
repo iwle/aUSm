@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.github.iwle.ausm.adapter.TabPagerAdapter
 
 class LoginActivity : FragmentActivity() {
     private lateinit var viewPager: ViewPager2
@@ -32,7 +33,8 @@ class LoginActivity : FragmentActivity() {
         signupFragment.arguments = bundle
         val cardFragmentList = listOf(loginFragment, signupFragment)
 
-        viewPager.adapter = TabPagerAdapter(this, cardFragmentList)
+        viewPager.adapter =
+            TabPagerAdapter(this, cardFragmentList)
     }
 
     // Hide keyboard when focus is lost

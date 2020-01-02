@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.github.iwle.ausm.adapter.TabPagerAdapter
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -39,7 +40,8 @@ class MainActivity : FragmentActivity() {
     private fun initialiseTabPagerAdapter() {
         val tabFragmentList = listOf(MapFragment(), ReviewFragment())
         val tabNameList = listOf(getString(R.string.tab_gps), getString(R.string.tab_reviews))
-        val tabPagerAdapter = TabPagerAdapter(this, tabFragmentList)
+        val tabPagerAdapter =
+            TabPagerAdapter(this, tabFragmentList)
         viewPager.adapter = tabPagerAdapter
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {

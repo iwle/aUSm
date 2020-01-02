@@ -1,4 +1,4 @@
-package com.github.iwle.ausm
+package com.github.iwle.ausm.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

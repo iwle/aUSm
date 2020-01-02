@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.github.iwle.ausm.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -67,7 +68,13 @@ class SignupFragment : Fragment() {
                         val userUid: String = auth.currentUser!!.uid
                         val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
                         val users: CollectionReference = firestore.collection("users")
-                        users.add(User(userUid, firstName, lastName))
+                        users.add(
+                            User(
+                                userUid,
+                                firstName,
+                                lastName
+                            )
+                        )
 
                         Toast.makeText(this.activity, getString(R.string.signup_success), Toast.LENGTH_LONG).show()
                         startActivity(Intent(this.activity, MainActivity::class.java))

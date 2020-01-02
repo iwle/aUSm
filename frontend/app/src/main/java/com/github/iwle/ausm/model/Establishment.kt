@@ -1,4 +1,4 @@
-package com.github.iwle.ausm
+package com.github.iwle.ausm.model
 
 data class Establishment(
     val imageUrl: String,
