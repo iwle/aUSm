@@ -12,6 +12,9 @@
     <string name="login_field_missing">Please fill in all the fields</string>
     <string name="login_success">Successfully logged in</string>
     <string name="login_failure">Login failed</string>
+    <string name="email_missing">Please fill in your email</string>
+    <string name="email_reset_success">Reset link sent to email successfully</string>
+    <string name="email_reset_failure">Unable to send reset email</string>
     <string name="tab_gps">GPS Tracker</string>
     <string name="tab_reviews">Reviews</string>
     <string name="add_review">Add Review</string>
