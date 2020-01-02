@@ -8,6 +8,7 @@
     <string name="sign_up">Register</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="sign_up_prompt">Don\'t have an account? Sign up</string>
+    <string name="log_in_prompt">Already have an account? Log in</string>
     <string name="login_field_missing">Please fill in all the fields</string>
     <string name="login_success">Successfully logged in</string>
     <string name="login_failure">Login failed</string>
