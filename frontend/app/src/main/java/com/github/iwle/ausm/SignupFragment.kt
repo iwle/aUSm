@@ -14,11 +14,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignupFragment : Fragment() {
     private lateinit var viewPager: ViewPager2
-    private lateinit var firstName: EditText
-    private lateinit var lastName: EditText
+    private lateinit var firstNameEditText: EditText
+    private lateinit var lastNameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var signupButton: Button
@@ -35,8 +37,8 @@ class SignupFragment : Fragment() {
         val viewPagerId = arguments!!.getInt("viewPagerId")
         viewPager = activity!!.findViewById(viewPagerId)
 
-        firstName = v.findViewById(R.id.first_name_edit_text)
-        lastName = v.findViewById(R.id.last_name_edit_text)
+        firstNameEditText = v.findViewById(R.id.first_name_edit_text)
+        lastNameEditText = v.findViewById(R.id.last_name_edit_text)
         emailEditText = v.findViewById(R.id.email_edit_text)
         passwordEditText = v.findViewById(R.id.password_edit_text)
         signupButton = v.findViewById(R.id.signup_button)
@@ -51,14 +53,22 @@ class SignupFragment : Fragment() {
 
     private fun initialiseSignup() {
         signupButton.setOnClickListener {
+            val firstName: String = firstNameEditText.text.toString()
+            val lastName: String = lastNameEditText.text.toString()
             val email: String = emailEditText.text.toString()
             val password: String = passwordEditText.text.toString()
 
-            if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            if(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                 Toast.makeText(this.activity, getString(R.string.field_missing), Toast.LENGTH_LONG).show()
             } else {
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this.activity as Activity) { task ->
                     if(task.isSuccessful) {
+                        // Store first and last name in users
+                        val userUid: String = auth.currentUser!!.uid
+                        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+                        val users: CollectionReference = firestore.collection("users")
+                        users.add(User(userUid, firstName, lastName))
+
                         Toast.makeText(this.activity, getString(R.string.signup_success), Toast.LENGTH_LONG).show()
                         startActivity(Intent(this.activity, MainActivity::class.java))
                     } else {
