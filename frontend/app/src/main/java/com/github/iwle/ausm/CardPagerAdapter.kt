@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class CardPagerAdapter(
-    private val layouts: List<Int> ) : RecyclerView.Adapter<ViewHolder>() {
+    private val layouts: List<Int>
+) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(layouts[viewType], parent, false)
+        view.tag = viewType
         return ViewHolder(view)
     }
 
