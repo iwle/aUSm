@@ -19,6 +19,8 @@
     <string name="email_reset_failure">Unable to send reset email</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="drawer_name">#NAME</string>
+    <string name="drawer_email">#EMAIL</string>
     <string name="tab_gps">GPS Tracker</string>
     <string name="tab_reviews">Reviews</string>
     <string name="add_review">Add Review</string>
