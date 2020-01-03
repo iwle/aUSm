@@ -172,4 +172,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(Intent(this, AddReviewActivity::class.java))
         }
     }
+
+    override fun onBackPressed() {
+        // Intercept back press and close drawer layout if open
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
 }
