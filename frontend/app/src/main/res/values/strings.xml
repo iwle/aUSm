@@ -6,6 +6,7 @@
     <string name="last_name_hint">Last Name</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Register</string>
+    <string name="log_out">Log Out</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="sign_up_prompt">Don\'t have an account? Sign up</string>
     <string name="log_in_prompt">Already have an account? Log in</string>
@@ -21,6 +22,10 @@
     <string name="drawer_close">Close</string>
     <string name="drawer_name">#NAME</string>
     <string name="drawer_email">#EMAIL</string>
+    <string name="alert_logout_title">Log Out</string>
+    <string name="alert_logout_message">You will be returned to the login screen.</string>
+    <string name="alert_logout_positive">Log Out</string>
+    <string name="alert_logout_negative">Cancel</string>
     <string name="tab_gps">GPS Tracker</string>
     <string name="tab_reviews">Reviews</string>
     <string name="add_review">Add Review</string>

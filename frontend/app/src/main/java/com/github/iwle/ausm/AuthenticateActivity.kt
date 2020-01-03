@@ -12,7 +12,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.github.iwle.ausm.adapter.TabPagerAdapter
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginActivity : FragmentActivity() {
+class AuthenticateActivity : FragmentActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener

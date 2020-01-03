@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -16,6 +17,7 @@ import com.github.iwle.ausm.adapter.TabPagerAdapter
 import com.github.iwle.ausm.model.User
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
@@ -33,6 +35,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var floatingActionButton: ExtendedFloatingActionButton
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+    private lateinit var logOutAlertDialog: AlertDialog
+    private lateinit var firebaseAuth: FirebaseAuth
     private var isFabEnabled = false
     private val pingActivityRequestCode = 1001
 
@@ -47,10 +51,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         floatingActionButton = findViewById(R.id.extended_floating_action_button)
         navigationView = findViewById(R.id.navigation_view)
         drawerLayout = findViewById(R.id.drawer_layout)
+        firebaseAuth = FirebaseAuth.getInstance()
 
         initialiseTabPagerAdapter()
         initialiseFloatingActionButton()
         initialiseNavigationDrawer()
+        initialiseAlertDialog()
     }
 
     private fun initialiseTabPagerAdapter() {
@@ -128,12 +134,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         actionBarDrawerToggle.isDrawerIndicatorEnabled = true
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+        navigationView.setNavigationItemSelectedListener(this)
 
         // Update navigation drawer header
         val view: View = navigationView.getHeaderView(0)
         val nameTextView: TextView = view.findViewById(R.id.name_text_view)
         val emailTextView: TextView = view.findViewById(R.id.email_text_view)
-        val firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        val firebaseUser: FirebaseUser = firebaseAuth.currentUser!!
         val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
         firestore.collection("users").document(firebaseUser.uid).get().addOnSuccessListener {
             val user: User? = it.toObject(User::class.java)
@@ -146,10 +153,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            // TODO
+            R.id.logout_item -> logOutAlertDialog.show()
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun initialiseAlertDialog() {
+        logOutAlertDialog = MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.alert_logout_title)
+            .setMessage(R.string.alert_logout_message)
+            .setPositiveButton(R.string.alert_logout_positive) { dialog, which ->
+                firebaseAuth.signOut()
+                startActivity(Intent(this, AuthenticateActivity::class.java))
+                // Destroy MainActivity
+                finish()
+            }
+            .setNegativeButton(R.string.alert_logout_negative) { dialog, which ->
+                dialog.cancel()
+            }
+            .create()
     }
 
     private fun updateFabStatus(status: Boolean) {
