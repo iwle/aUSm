@@ -6,7 +6,6 @@
     <dimen name="navigation_drawer_header_height">170dp</dimen>
     <dimen name="navigation_drawer_header_padding">15dp</dimen>
     <dimen name="navigation_drawer_header_font_size">20sp</dimen>
-    <dimen name="card_margin">5dp</dimen>
     <dimen name="card_padding">16dp</dimen>
     <dimen name="card_corner_radius">4dp</dimen>
     <dimen name="card_divider">5dp</dimen>
