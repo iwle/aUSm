@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -12,11 +13,15 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.github.iwle.ausm.adapter.TabPagerAdapter
+import com.github.iwle.ausm.model.User
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import com.rtchagas.pingplacepicker.PingPlacePicker
 import kotlin.math.abs
 
@@ -104,6 +109,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun initialiseNavigationDrawer() {
+        // Attach navigation drawer
         setSupportActionBar(toolbar)
         val actionBarDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
             this,
@@ -122,6 +128,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         actionBarDrawerToggle.isDrawerIndicatorEnabled = true
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+
+        // Update navigation drawer header
+        val view: View = navigationView.getHeaderView(0)
+        val nameTextView: TextView = view.findViewById(R.id.name_text_view)
+        val emailTextView: TextView = view.findViewById(R.id.email_text_view)
+        val firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+        firestore.collection("users").document(firebaseUser.uid).get().addOnSuccessListener {
+            val user: User? = it.toObject(User::class.java)
+            if(user != null) {
+                nameTextView.text = user.firstName + " " + user.lastName
+            }
+        }
+        emailTextView.text = firebaseUser.email
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

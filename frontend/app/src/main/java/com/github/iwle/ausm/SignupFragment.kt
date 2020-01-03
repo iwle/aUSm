@@ -67,9 +67,8 @@ class SignupFragment : Fragment() {
                         val userUid: String = firebaseAuth.currentUser!!.uid
                         val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
                         val users: CollectionReference = firestore.collection("users")
-                        users.add(
+                        users.document(userUid).set(
                             User(
-                                userUid,
                                 firstName,
                                 lastName
                             )
