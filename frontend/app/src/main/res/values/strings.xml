@@ -38,4 +38,8 @@
     <string name="review_category_crowd">How crowded is this place?</string>
     <string name="review_category_overall">How would you rate this place overall?</string>
     <string name="text_area_review">Review</string>
+    <string name="missing_choice_noise">Please select a noise level</string>
+    <string name="missing_choice_crowd">Please select a crowd level</string>
+    <string name="missing_rating_overall">Please give an overall rating</string>
+    <string name="connection_failed">Failed to establish a connection to the server</string>
 </resources>

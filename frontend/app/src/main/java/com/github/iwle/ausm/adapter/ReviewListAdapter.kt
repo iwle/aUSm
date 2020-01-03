@@ -28,9 +28,9 @@ class ReviewListAdapter(private val establishments: ArrayList<Establishment>) :
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        Picasso.get().load(establishments[position].imageUrl).into(holder.image)
+        // TODO: Picasso.get().load(establishments[position].imageUrl).into(holder.image)
         holder.name.text = establishments[position].name
-        holder.location.text = establishments[position].location
+        holder.location.text = establishments[position].address
         holder.rating.text = establishments[position].rating.toString()
     }
 

@@ -211,8 +211,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if(requestCode == pingActivityRequestCode && resultCode == Activity.RESULT_OK) {
             val place: Place? = PingPlacePicker.getPlace(data!!)
-
-            startActivity(Intent(this, AddReviewActivity::class.java))
+            val intent: Intent = Intent(this, AddReviewActivity::class.java)
+            intent.putExtra("place", place)
+            startActivity(intent)
         }
     }
 

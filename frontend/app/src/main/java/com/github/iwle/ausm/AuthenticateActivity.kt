@@ -38,8 +38,7 @@ class AuthenticateActivity : FragmentActivity() {
         signupFragment.arguments = bundle
         val cardFragmentList = listOf(loginFragment, signupFragment)
 
-        viewPager.adapter =
-            TabPagerAdapter(this, cardFragmentList)
+        viewPager.adapter = TabPagerAdapter(this, cardFragmentList)
     }
 
     private fun initialiseAuthStateListener() {

@@ -1,8 +1,12 @@
 package com.github.iwle.ausm.model
 
 data class Establishment(
-    val imageUrl: String,
     val name: String,
-    val location: String,
-    val rating: Double
+    val address: String,
+    val latitude: Double,
+    val longitude: Double,
+    val imageBase64: String = "",
+    val noiseRating: Float = 0f,
+    val soundRating: Float = 0f,
+    val rating: Float = 0f
 )
