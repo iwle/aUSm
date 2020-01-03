@@ -110,7 +110,7 @@
                 style="@style/ReviewTextView"
                 android:text="@string/review_category_overall" />
 
-            <RatingBar
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 style="@style/ReviewRatingBar" />
 
             <View
