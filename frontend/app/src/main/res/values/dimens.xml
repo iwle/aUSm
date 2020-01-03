@@ -2,6 +2,8 @@
 <resources>
     <dimen name="authentication_text_margin">3dp</dimen>
     <dimen name="signup_horizontal_margin">3dp</dimen>
+    <dimen name="navigation_drawer_width">304dp</dimen>
+    <dimen name="navigation_drawer_header_height">170dp</dimen>
     <dimen name="card_margin">5dp</dimen>
     <dimen name="card_padding">16dp</dimen>
     <dimen name="card_corner_radius">4dp</dimen>
