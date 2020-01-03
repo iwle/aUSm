@@ -33,6 +33,7 @@
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/colorPrimaryVariant</item>
     </style>
 
     <style name="NavigationDrawerHeaderTextView" parent="Widget.AppCompat.TextView">
