@@ -3,23 +3,31 @@ package com.github.iwle.ausm
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.FragmentActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.github.iwle.ausm.adapter.TabPagerAdapter
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import com.rtchagas.pingplacepicker.PingPlacePicker
 import kotlin.math.abs
 
-class MainActivity : FragmentActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
     private lateinit var toolbar: Toolbar
     private lateinit var appBarLayout: AppBarLayout
     private lateinit var floatingActionButton: ExtendedFloatingActionButton
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
     private var isFabEnabled = false
     private val pingActivityRequestCode = 1001
 
@@ -32,9 +40,12 @@ class MainActivity : FragmentActivity() {
         toolbar = findViewById(R.id.toolbar)
         appBarLayout = findViewById(R.id.app_bar_layout)
         floatingActionButton = findViewById(R.id.extended_floating_action_button)
+        navigationView = findViewById(R.id.navigation_view)
+        drawerLayout = findViewById(R.id.drawer_layout)
 
         initialiseTabPagerAdapter()
         initialiseFloatingActionButton()
+        initialiseNavigationDrawer()
     }
 
     private fun initialiseTabPagerAdapter() {
@@ -90,6 +101,35 @@ class MainActivity : FragmentActivity() {
                 showFab()
             }
         })
+    }
+
+    private fun initialiseNavigationDrawer() {
+        setSupportActionBar(toolbar)
+        val actionBarDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.drawer_open,
+            R.string.drawer_close) {
+            override fun onDrawerOpened(drawerView: View) {
+                super.onDrawerOpened(drawerView)
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                super.onDrawerClosed(drawerView)
+            }
+        }
+        actionBarDrawerToggle.isDrawerIndicatorEnabled = true
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            // TODO
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 
     private fun updateFabStatus(status: Boolean) {
