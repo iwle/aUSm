@@ -47,6 +47,8 @@ class LoginActivity : FragmentActivity() {
         authStateListener = FirebaseAuth.AuthStateListener {
             if(firebaseAuth.currentUser != null) {
                 startActivity(Intent(this, MainActivity::class.java))
+                // Destroy AuthenticateActivity
+                finish()
             }
         }
         firebaseAuth.addAuthStateListener(authStateListener)
