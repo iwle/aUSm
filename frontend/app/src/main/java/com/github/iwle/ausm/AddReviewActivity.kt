@@ -22,6 +22,7 @@ import com.google.android.libraries.places.api.net.FetchPhotoRequest
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,6 +40,7 @@ class AddReviewActivity : AppCompatActivity() {
     private lateinit var reviewTextEdit: TextInputEditText
     private lateinit var toolbar: Toolbar
     private lateinit var placesClient: PlacesClient
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +54,7 @@ class AddReviewActivity : AppCompatActivity() {
         reviewTextEdit = findViewById(R.id.review_text_input)
         toolbar = findViewById(R.id.add_review_toolbar)
 
+        firebaseAuth = FirebaseAuth.getInstance()
         Places.initialize(applicationContext, getString(R.string.place_picker_places_key))
         placesClient = Places.createClient(this)
 
@@ -105,66 +108,97 @@ class AddReviewActivity : AppCompatActivity() {
 
     private fun addReview(review: Review) {
         val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-
-        // Check if establishment exists in database
         val establishments: CollectionReference = firestore.collection("establishments")
-        establishments.document(place.id!!).get()
-            .addOnCompleteListener {task ->
-                if(task.isSuccessful) {
-                    val document: DocumentSnapshot = task.result!!
-                    if (document.exists()) {
-                        // Establishment exists in database
-                        Log.i(TAG, "Establishment exists in database")
-                    } else {
-                        Log.i(TAG, "Establishment does not exist in database")
-                        var imageB64 = ""
-                        // Get establishment photo
-                        val photoMetadata: PhotoMetadata = place.photoMetadatas!![0]
-                        val photoRequest: FetchPhotoRequest =
-                            FetchPhotoRequest.builder(photoMetadata)
-                                .setMaxHeight(500)
-                                .setMaxWidth(500)
-                                .build()
-                        placesClient.fetchPhoto(photoRequest)
-                            .addOnSuccessListener { fetchPhotoResponse ->
-                                Log.i(TAG, "Successfully fetched Google Place photo")
-                                val bitmap: Bitmap = fetchPhotoResponse.bitmap
+        val reviews: CollectionReference = establishments
+            .document(place.id!!)
+            .collection("reviews")
 
-                                // Encode image to Base64
-                                val byteArrayOutputStream = ByteArrayOutputStream()
-                                bitmap.compress(
-                                    Bitmap.CompressFormat.PNG,
-                                    100,
-                                    byteArrayOutputStream
-                                )
-                                bitmap.recycle()
-                                val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-                                imageB64 = Base64.encodeToString(byteArray, Base64.URL_SAFE)
+        fun addReviewToEstablishment() {
+            Log.i(TAG, "Successfully created new Review under Establishment")
+            reviews.document(firebaseAuth.uid!!).set(review)
+        }
 
-                                // Create establishment
-                                Log.i(TAG, "Successfully created new establishment")
-                                establishments.document(place.id!!).set(
-                                    Establishment(
-                                        place.name!!,
-                                        place.address!!,
-                                        place.latLng!!.latitude,
-                                        place.latLng!!.longitude,
-                                        imageB64
+        fun initialiseEstablishment() {
+            // Check if establishment exists in database
+            establishments.document(place.id!!).get()
+                .addOnCompleteListener {task ->
+                    if(task.isSuccessful) {
+                        val document: DocumentSnapshot = task.result!!
+                        if(document.exists()) {
+                            // Establishment exists in database
+                            Log.i(TAG, "Establishment exists in database")
+                            addReviewToEstablishment()
+                        } else {
+                            Log.i(TAG, "Establishment does not exist in database")
+                            var imageB64 = ""
+                            // Get establishment photo
+                            val photoMetadata: PhotoMetadata = place.photoMetadatas!![0]
+                            val photoRequest: FetchPhotoRequest =
+                                FetchPhotoRequest.builder(photoMetadata)
+                                    .setMaxHeight(500)
+                                    .setMaxWidth(500)
+                                    .build()
+                            placesClient.fetchPhoto(photoRequest)
+                                .addOnSuccessListener { fetchPhotoResponse ->
+                                    Log.i(TAG, "Successfully fetched Google Place photo")
+                                    val bitmap: Bitmap = fetchPhotoResponse.bitmap
+
+                                    // Encode image to Base64
+                                    val byteArrayOutputStream = ByteArrayOutputStream()
+                                    bitmap.compress(
+                                        Bitmap.CompressFormat.PNG,
+                                        100,
+                                        byteArrayOutputStream
                                     )
-                                )
-                            }
+                                    bitmap.recycle()
+                                    val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+                                    imageB64 = Base64.encodeToString(byteArray, Base64.URL_SAFE)
+
+                                    // Create establishment
+                                    Log.i(TAG, "Successfully created new Establishment")
+                                    establishments.document(place.id!!).set(
+                                        Establishment(
+                                            place.name!!,
+                                            place.address!!,
+                                            place.latLng!!.latitude,
+                                            place.latLng!!.longitude,
+                                            imageB64
+                                        )
+                                    )
+                                    addReviewToEstablishment()
+                                }
+                        }
+                    } else {
+                        Log.i(TAG, "Firestore query failed: ", task.exception)
                     }
-                } else {
-                    Log.i(TAG, "Firestore query failed: ", task.exception)
                 }
-            }
-            .addOnFailureListener {
-                // Failed to query database
-                Log.i(TAG, "Failed to contact Firestore")
-                Toast.makeText(this, R.string.connection_failed, Toast.LENGTH_LONG).show()
-            }
-        val reviews: CollectionReference = firestore.collection("reviews")
-        // reviews.document(place.id!!).set(review)
+                .addOnFailureListener {
+                    // Failed to query database
+                    Log.i(TAG, "Failed to contact Firestore")
+                    Toast.makeText(this, R.string.connection_failed, Toast.LENGTH_LONG).show()
+                }
+        }
+
+        fun checkIfReviewExists() {
+            reviews.document(firebaseAuth.uid!!).get()
+                .addOnCompleteListener {task ->
+                    if(task.isSuccessful) {
+                        val document: DocumentSnapshot = task.result!!
+                        if(document.exists()) {
+                            // Review already exists
+                            Log.i(TAG, "Review for Establishment already exists in database")
+                        } else {
+                            // Review does not exist
+                            Log.i(TAG, "Review for Establishment does not exist in databse")
+                            initialiseEstablishment()
+                        }
+                    } else {
+                        Log.i(TAG, "Firestore query failed: ", task.exception)
+                    }
+                }
+        }
+
+        checkIfReviewExists()
     }
 
     // Hide keyboard when focus is lost
