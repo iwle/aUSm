@@ -117,7 +117,7 @@ class AddReviewActivity : AppCompatActivity() {
                         Log.i(TAG, "Establishment exists in database")
                     } else {
                         Log.i(TAG, "Establishment does not exist in database")
-                        var imageB64: String = ""
+                        var imageB64 = ""
                         // Get establishment photo
                         val photoMetadata: PhotoMetadata = place.photoMetadatas!![0]
                         val photoRequest: FetchPhotoRequest =
@@ -140,18 +140,19 @@ class AddReviewActivity : AppCompatActivity() {
                                 bitmap.recycle()
                                 val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
                                 imageB64 = Base64.encodeToString(byteArray, Base64.URL_SAFE)
+
+                                // Create establishment
+                                Log.i(TAG, "Successfully created new establishment")
+                                establishments.document(place.id!!).set(
+                                    Establishment(
+                                        place.name!!,
+                                        place.address!!,
+                                        place.latLng!!.latitude,
+                                        place.latLng!!.longitude,
+                                        imageB64
+                                    )
+                                )
                             }
-                        // Create establishment
-                        Log.i(TAG, "Successfully created new establishment")
-                        establishments.document(place.id!!).set(
-                            Establishment(
-                                place.name!!,
-                                place.address!!,
-                                place.latLng!!.latitude,
-                                place.latLng!!.longitude,
-                                imageB64
-                            )
-                        )
                     }
                 } else {
                     Log.i(TAG, "Firestore query failed: ", task.exception)
