@@ -37,4 +37,5 @@
     <string name="review_category_noise">How noisy is this place?</string>
     <string name="review_category_crowd">How crowded is this place?</string>
     <string name="review_category_overall">How would you rate this place overall?</string>
+    <string name="text_area_review">Review</string>
 </resources>

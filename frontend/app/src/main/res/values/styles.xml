@@ -86,6 +86,31 @@
         <item name="android:stepSize">1</item>
     </style>
 
+    <style name="ReviewTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/text_area_size</item>
+        <item name="android:layout_marginStart">@dimen/add_review_margin</item>
+        <item name="android:layout_marginEnd">@dimen/add_review_margin</item>
+        <item name="android:layout_marginTop">@dimen/chip_group_margin</item>
+        <item name="android:layout_marginBottom">@dimen/chip_group_margin</item>
+    </style>
+
+    <style name="ReviewTextInputEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:inputType">textMultiLine</item>
+        <item name="android:gravity">top</item>
+    </style>
+
+    <style name="ReviewButton" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/add_review_margin</item>
+        <item name="android:layout_marginEnd">@dimen/add_review_margin</item>
+        <item name="android:layout_marginTop">@dimen/chip_group_margin</item>
+        <item name="android:layout_marginBottom">@dimen/add_review_margin</item>
+    </style>
+
     <style name="ReviewDivider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/divider</item>
