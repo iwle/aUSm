@@ -1,6 +1,7 @@
 package com.github.iwle.ausm
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
@@ -9,9 +10,12 @@ import android.widget.EditText
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.github.iwle.ausm.adapter.TabPagerAdapter
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : FragmentActivity() {
     private lateinit var viewPager: ViewPager2
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +25,7 @@ class LoginActivity : FragmentActivity() {
         // Disable swiping
         viewPager.isUserInputEnabled = false
         initialiseViewPager()
+        initialiseAuthStateListener()
     }
 
     private fun initialiseViewPager() {
@@ -35,6 +40,16 @@ class LoginActivity : FragmentActivity() {
 
         viewPager.adapter =
             TabPagerAdapter(this, cardFragmentList)
+    }
+
+    private fun initialiseAuthStateListener() {
+        firebaseAuth = FirebaseAuth.getInstance()
+        authStateListener = FirebaseAuth.AuthStateListener {
+            if(firebaseAuth.currentUser != null) {
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+        }
+        firebaseAuth.addAuthStateListener(authStateListener)
     }
 
     // Hide keyboard when focus is lost

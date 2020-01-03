@@ -1,7 +1,6 @@
 package com.github.iwle.ausm
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -22,7 +21,7 @@ class LoginFragment : Fragment() {
     private lateinit var loginButton: Button
     private lateinit var forgetPasswordTextView: TextView
     private lateinit var signupTextView: TextView
-    private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +38,7 @@ class LoginFragment : Fragment() {
         loginButton = v.findViewById(R.id.login_button)
         forgetPasswordTextView = v.findViewById(R.id.forget_password_text_view)
         signupTextView = v.findViewById(R.id.signup_text_view)
-        auth = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
 
         initialiseLogin()
         initialiseForgetPassword()
@@ -56,10 +55,9 @@ class LoginFragment : Fragment() {
             if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                 Toast.makeText(this.activity, getString(R.string.field_missing), Toast.LENGTH_LONG).show()
             } else {
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this.activity as Activity) { task ->
+                firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this.activity as Activity) { task ->
                     if(task.isSuccessful) {
                         Toast.makeText(this.activity, getString(R.string.login_success), Toast.LENGTH_LONG).show()
-                        startActivity(Intent(this.activity, MainActivity::class.java))
                     } else {
                         Toast.makeText(this.activity, getString(R.string.login_failure), Toast.LENGTH_LONG).show()
                     }
@@ -75,7 +73,7 @@ class LoginFragment : Fragment() {
             if(TextUtils.isEmpty(email)) {
                 Toast.makeText(this.activity, getString(R.string.email_missing), Toast.LENGTH_LONG).show()
             } else {
-                auth.sendPasswordResetEmail(email).addOnCompleteListener(this.activity as Activity) { task ->
+                firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(this.activity as Activity) { task ->
                     if(task.isSuccessful) {
                         Toast.makeText(this.activity, getString(R.string.email_reset_success), Toast.LENGTH_LONG).show()
                     } else {

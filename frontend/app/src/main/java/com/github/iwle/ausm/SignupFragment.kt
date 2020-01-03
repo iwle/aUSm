@@ -1,7 +1,6 @@
 package com.github.iwle.ausm
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -26,7 +25,7 @@ class SignupFragment : Fragment() {
     private lateinit var passwordEditText: EditText
     private lateinit var signupButton: Button
     private lateinit var loginTextView: TextView
-    private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +43,7 @@ class SignupFragment : Fragment() {
         passwordEditText = v.findViewById(R.id.password_edit_text)
         signupButton = v.findViewById(R.id.signup_button)
         loginTextView = v.findViewById(R.id.login_text_view)
-        auth = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
 
         initialiseSignup()
         initialiseLogIn()
@@ -62,10 +61,10 @@ class SignupFragment : Fragment() {
             if(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                 Toast.makeText(this.activity, getString(R.string.field_missing), Toast.LENGTH_LONG).show()
             } else {
-                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this.activity as Activity) { task ->
+                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this.activity as Activity) { task ->
                     if(task.isSuccessful) {
                         // Store first and last name in users
-                        val userUid: String = auth.currentUser!!.uid
+                        val userUid: String = firebaseAuth.currentUser!!.uid
                         val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
                         val users: CollectionReference = firestore.collection("users")
                         users.add(
@@ -77,7 +76,6 @@ class SignupFragment : Fragment() {
                         )
 
                         Toast.makeText(this.activity, getString(R.string.signup_success), Toast.LENGTH_LONG).show()
-                        startActivity(Intent(this.activity, MainActivity::class.java))
                     } else {
                         Toast.makeText(this.activity, getString(R.string.signup_failure), Toast.LENGTH_LONG).show()
                     }
