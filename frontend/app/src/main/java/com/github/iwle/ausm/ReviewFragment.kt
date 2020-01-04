@@ -1,5 +1,6 @@
 package com.github.iwle.ausm
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -55,7 +56,9 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun onEstablishmentClicked(establishment: Establishment) {
-        // TODO
+        val intent: Intent = Intent(this.activity, EstablishmentDetailsActivity::class.java)
+        intent.putExtra("establishment", establishment)
+        startActivity(intent)
     }
 
     private fun fetchData() {

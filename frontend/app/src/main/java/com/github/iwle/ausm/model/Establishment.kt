@@ -1,5 +1,7 @@
 package com.github.iwle.ausm.model
 
+import java.io.Serializable
+
 data class Establishment(
     var name: String = "",
     var address: String = "",
@@ -10,4 +12,4 @@ data class Establishment(
     var noiseRating: Float = 0f,
     var crowdRating: Float = 0f,
     var overallRating: Float = 0f
-)
+) : Serializable
