@@ -1,10 +1,11 @@
 package com.github.iwle.ausm
 
-import android.app.Activity
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,10 +17,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class EstablishmentDetailsActivity : Activity() {
+class EstablishmentDetailsActivity : AppCompatActivity() {
     private lateinit var establishment: Establishment
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var collapsingToolbarLayout: net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
+    private lateinit var toolbar: Toolbar
     private lateinit var imageView: ImageView
     private lateinit var floatingActionButton: FloatingActionButton
     private lateinit var reviewAdapter: ReviewAdapter
@@ -34,6 +37,8 @@ class EstablishmentDetailsActivity : Activity() {
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
+        collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar_layout)
+        toolbar = findViewById(R.id.toolbar)
         imageView = findViewById(R.id.image_view)
         floatingActionButton = findViewById(R.id.floating_action_button)
 
@@ -65,12 +70,17 @@ class EstablishmentDetailsActivity : Activity() {
                 }
         }
 
+        setFabAction()
+
         // Decode Base64 String to Bitmap
         val imageBytes = Base64.decode(establishment.imageBase64, Base64.URL_SAFE)
         val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
         imageView.setImageBitmap(decodedImage)
 
-        setFabAction()
+        // Set toolbar title
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        collapsingToolbarLayout.title = establishment.name
     }
 
     private fun fetchData() {
