@@ -1,5 +1,7 @@
 package com.github.iwle.ausm.adapter
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,14 +10,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iwle.ausm.model.Establishment
 import com.github.iwle.ausm.R
-import com.squareup.picasso.Picasso
 
 class ReviewListAdapter(private val establishments: ArrayList<Establishment>) :
         RecyclerView.Adapter<ReviewListAdapter.CardViewHolder>() {
     class CardViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val image: ImageView = v.findViewById(R.id.establishment_image)
         val name: TextView = v.findViewById(R.id.establishment_name)
-        val location: TextView = v.findViewById(R.id.establishment_location)
+        val address: TextView = v.findViewById(R.id.establishment_address)
         val rating: TextView = v.findViewById(R.id.establishment_rating)
     }
 
@@ -28,9 +29,13 @@ class ReviewListAdapter(private val establishments: ArrayList<Establishment>) :
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        // TODO: Picasso.get().load(establishments[position].imageUrl).into(holder.image)
+        // Decode Base64 String to Bitmap
+        val imageBytes = Base64.decode(establishments[position].imageBase64, Base64.URL_SAFE)
+        val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        holder.image.setImageBitmap(decodedImage)
+
         holder.name.text = establishments[position].name
-        holder.location.text = establishments[position].address
+        holder.address.text = establishments[position].address
         holder.rating.text = establishments[position].overallRating.toString()
     }
 
