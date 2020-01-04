@@ -3,6 +3,7 @@ package com.github.iwle.ausm.model
 import java.io.Serializable
 
 data class Establishment(
+    var placeId: String = "",
     var name: String = "",
     var address: String = "",
     var latitude: Double = 0.0,

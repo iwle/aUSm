@@ -162,6 +162,7 @@ class AddReviewActivity : AppCompatActivity() {
                 Log.i(TAG, "Successfully created new Establishment")
                 establishments.document(place.id!!).set(
                     Establishment(
+                        place.id!!,
                         place.name!!,
                         place.address!!,
                         place.latLng!!.latitude,
