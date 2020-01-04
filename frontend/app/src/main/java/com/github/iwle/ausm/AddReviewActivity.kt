@@ -19,6 +19,7 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.PhotoMetadata
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPhotoRequest
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
@@ -160,17 +161,35 @@ class AddReviewActivity : AppCompatActivity() {
         fun initialiseEstablishment() {
             fun createEstablishment(imageB64: String = "") {
                 Log.i(TAG, "Successfully created new Establishment")
-                establishments.document(place.id!!).set(
-                    Establishment(
-                        place.id!!,
-                        place.name!!,
-                        place.address!!,
-                        place.latLng!!.latitude,
-                        place.latLng!!.longitude,
-                        imageB64
+
+                val placeFields = arrayListOf<Place.Field>(
+                    Place.Field.PHONE_NUMBER,
+                    Place.Field.WEBSITE_URI,
+                    Place.Field.OPENING_HOURS)
+                val fetchPlaceRequest = FetchPlaceRequest.newInstance(place.id!!, placeFields)
+                placesClient.fetchPlace(fetchPlaceRequest).addOnSuccessListener { fetchPlaceResponse ->
+                    val place2 = fetchPlaceResponse.place
+                    var openingHours = ""
+                    if(place2.openingHours != null) {
+                        openingHours = place2.openingHours!!.weekdayText.toString()
+                    }
+
+                    establishments.document(place.id!!).set(
+                        Establishment(
+                            place.id!!,
+                            place.name!!,
+                            place.address!!,
+                            place.latLng!!.latitude,
+                            place.latLng!!.longitude,
+                            imageB64,
+                            place2.phoneNumber ?: "",
+                            (place2.websiteUri ?: "").toString(),
+                            openingHours,
+                            place.types ?: ArrayList()
+                        )
                     )
-                )
-                addReviewToEstablishment()
+                    addReviewToEstablishment()
+                }
             }
 
             // Check if Establishment exists in database
@@ -190,8 +209,8 @@ class AddReviewActivity : AppCompatActivity() {
                                 val photoMetadata: PhotoMetadata = place.photoMetadatas!![0]
                                 val photoRequest: FetchPhotoRequest =
                                     FetchPhotoRequest.builder(photoMetadata)
-                                        .setMaxHeight(500)
-                                        .setMaxWidth(500)
+                                        .setMaxHeight(400)
+                                        .setMaxWidth(400)
                                         .build()
                                 placesClient.fetchPhoto(photoRequest)
                                     .addOnSuccessListener { fetchPhotoResponse ->

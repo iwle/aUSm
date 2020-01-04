@@ -12,6 +12,7 @@
     <dimen name="card_divider">5dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="add_review_margin">15dp</dimen>
+    <dimen name="add_review_rating_bar_height">40dp</dimen>
     <dimen name="chip_group_margin">8dp</dimen>
     <dimen name="divider">1dp</dimen>
     <dimen name="category_font_size">20sp</dimen>

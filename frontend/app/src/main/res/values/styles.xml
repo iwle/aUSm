@@ -83,7 +83,7 @@
 
     <style name="ReviewRatingBar" parent="Widget.AppCompat.RatingBar">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">@dimen/add_review_rating_bar_height</item>
         <item name="android:layout_marginStart">@dimen/add_review_margin</item>
         <item name="android:layout_marginEnd">@dimen/add_review_margin</item>
         <item name="android:layout_marginTop">@dimen/chip_group_margin</item>
