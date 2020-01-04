@@ -3,6 +3,163 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <!--Buttons Layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!--Call Button-->
+        <LinearLayout
+            style="@style/DetailsButtonLayout">
+
+            <LinearLayout
+                android:id="@+id/button_call"
+                style="@style/DetailsButton">
+
+                <ImageView
+                    style="@style/DetailsButtonImage"
+                    android:src="@drawable/baseline_call_white_24"/>
+
+                <TextView
+                    style="@style/DetailsButtonText"
+                    android:text="@string/call"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--Directions Button-->
+        <LinearLayout
+            style="@style/DetailsButtonLayout">
+
+            <LinearLayout
+                android:id="@+id/button_directions"
+                style="@style/DetailsButton">
+
+                <ImageView
+                    style="@style/DetailsButtonImage"
+                    android:src="@drawable/baseline_directions_white_24"/>
+
+                <TextView
+                    style="@style/DetailsButtonText"
+                    android:text="@string/directions"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--Website Button-->
+        <LinearLayout
+            style="@style/DetailsButtonLayout">
+
+            <LinearLayout
+                android:id="@+id/button_website"
+                style="@style/DetailsButton">
+
+                <ImageView
+                    style="@style/DetailsButtonImage"
+                    android:src="@drawable/baseline_open_in_new_white_24"/>
+
+                <TextView
+                    style="@style/DetailsButtonText"
+                    android:text="@string/website"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/ReviewDivider"/>
+
+    <!--Info Layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/details_info_padding_left"
+        android:paddingRight="@dimen/details_info_padding_right"
+        android:paddingTop="@dimen/details_info_padding_top"
+        android:paddingBottom="@dimen/details_info_padding_bottom">
+
+        <!--Address-->
+        <LinearLayout
+            style="@style/DetailsInfoLayout">
+
+            <ImageView
+                style="@style/DetailsInfoIcon"
+                android:src="@drawable/baseline_location_on_white_24"/>
+
+            <TextView
+                android:id="@+id/info_address"
+                style="@style/DetailsInfoText"/>
+
+        </LinearLayout>
+
+        <Space
+            style="@style/DetailsInfoSpace"/>
+
+        <!--Operating Hours-->
+        <LinearLayout
+            style="@style/DetailsInfoLayout">
+
+            <ImageView
+                style="@style/DetailsInfoIcon"
+                android:src="@drawable/baseline_access_time_white_24"/>
+
+            <TextView
+                android:id="@+id/info_operating_status"
+                style="@style/DetailsInfoText"/>
+
+            <TextView
+                android:id="@+id/info_operating_hours"
+                style="@style/DetailsInfoText"/>
+
+        </LinearLayout>
+
+        <Space
+            style="@style/DetailsInfoSpace"/>
+
+        <!--Telephone Number-->
+        <LinearLayout
+            style="@style/DetailsInfoLayout">
+
+            <ImageView
+                style="@style/DetailsInfoIcon"
+                android:src="@drawable/baseline_call_white_24"/>
+
+            <TextView
+                android:id="@+id/bottom_sheet_info_telephone"
+                style="@style/DetailsInfoText"/>
+
+        </LinearLayout>
+
+        <Space
+            style="@style/DetailsInfoSpace"/>
+
+        <!--Website-->
+        <LinearLayout
+            style="@style/DetailsInfoLayout">
+
+            <ImageView
+                style="@style/DetailsInfoIcon"
+                android:src="@drawable/baseline_link_white_24"/>
+
+            <TextView
+                android:id="@+id/bottom_sheet_info_website"
+                style="@style/DetailsInfoText"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/ReviewDivider"/>
 
 </LinearLayout>

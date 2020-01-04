@@ -123,4 +123,60 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    <style name="DetailsButtonLayout">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="DetailsButton">
+        <item name="android:layout_width">@dimen/details_button_size</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/details_button_padding_top</item>
+        <item name="android:paddingBottom">@dimen/details_button_padding_bottom</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="DetailsButtonImage">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:tint">@color/colorAccent</item>
+    </style>
+
+    <style name="DetailsButtonText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_marginTop">@dimen/details_button_text_margin</item>
+    </style>
+
+    <style name="DetailsInfoLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">left|center</item>
+    </style>
+
+    <style name="DetailsInfoIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:tint">@color/colorAccent</item>
+        <item name="android:paddingRight">@dimen/details_info_text_margin</item>
+    </style>
+
+    <style name="DetailsInfoText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DetailsInfoSpace">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/details_info_space_height</item>
+    </style>
+
 </resources>

@@ -44,4 +44,7 @@
     <string name="connection_failed">Failed to establish a connection to the server</string>
     <string name="review_already_exists">Cannot review the same place twice</string>
     <string name="add_review_success">Review successfully added</string>
+    <string name="call">Call</string>
+    <string name="directions">Directions</string>
+    <string name="website">Website</string>
 </resources>
