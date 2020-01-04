@@ -56,6 +56,10 @@ class ReviewAdapter (
                 }
             holder.ratingBar.rating = reviews[position - 1].overallRating.toFloat()
             holder.review.text = reviews[position - 1].review
+            // Hide review text view if there is no written review
+            if(holder.review.text == "") {
+                holder.review.visibility = View.GONE
+            }
         }
     }
 

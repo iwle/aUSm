@@ -7,6 +7,7 @@
     <dimen name="navigation_drawer_header_padding">15dp</dimen>
     <dimen name="navigation_drawer_header_font_size">20sp</dimen>
     <dimen name="card_padding">16dp</dimen>
+    <dimen name="card_elevation">8dp</dimen>
     <dimen name="card_corner_radius">4dp</dimen>
     <dimen name="card_divider">5dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
@@ -16,4 +17,6 @@
     <dimen name="category_font_size">20sp</dimen>
     <dimen name="text_area_size">200dp</dimen>
     <dimen name="review_details_header_size">256dp</dimen>
+    <dimen name="review_name_text_size">20sp</dimen>
+    <dimen name="review_rating_bar_height">12dp</dimen>
 </resources>

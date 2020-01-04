@@ -6,27 +6,33 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/mtrl_card_spacing"
     android:layout_marginTop="@dimen/mtrl_card_spacing"
-    android:layout_marginRight="@dimen/mtrl_card_spacing">
+    android:layout_marginRight="@dimen/mtrl_card_spacing"
+    android:elevation="@dimen/card_elevation">
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/card_padding">
 
         <TextView
             android:id="@+id/name_text_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/review_name_text_size" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/rating_bar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="@dimen/review_rating_bar_height"
+                android:isIndicator="true" />
 
             <TextView
                 android:id="@+id/date_text_view"
