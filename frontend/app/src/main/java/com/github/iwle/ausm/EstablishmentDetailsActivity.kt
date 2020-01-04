@@ -45,6 +45,10 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
 
         reviewList = ArrayList()
         reviewAdapter = ReviewAdapter(Info(
+            establishment.overallRating,
+            establishment.noiseRating,
+            establishment.crowdRating,
+            establishment.numReviews,
             establishment.address,
             establishment.openingHours,
             establishment.phoneNumber,

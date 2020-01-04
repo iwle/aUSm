@@ -6,16 +6,18 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iwle.ausm.R
 import com.github.iwle.ausm.model.Info
 import com.github.iwle.ausm.model.Review
+import com.google.common.math.DoubleMath.roundToInt
 import com.google.firebase.firestore.FirebaseFirestore
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
+import kotlin.math.roundToInt
 
 class ReviewAdapter (
     private val info: Info,
@@ -37,6 +39,12 @@ class ReviewAdapter (
         val callButton: LinearLayout = v.findViewById(R.id.button_call)
         val directionsButton: LinearLayout = v.findViewById(R.id.button_directions)
         val websiteButton: LinearLayout = v.findViewById(R.id.button_website)
+
+        val overallRating: TextView = v.findViewById(R.id.overall_rating_text_view)
+        val overallRatingBar: MaterialRatingBar = v.findViewById(R.id.overall_rating_bar)
+        val numberRatings: TextView = v.findViewById(R.id.number_ratings_text_view)
+        val noiseRating: TextView = v.findViewById(R.id.noise_rating_text_view)
+        val crowdRating: TextView = v.findViewById(R.id.crowd_rating_text_view)
     }
 
     class ReviewViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -99,6 +107,56 @@ class ReviewAdapter (
                     Toast.makeText(holder.itemView.context, R.string.website_unavailable, Toast.LENGTH_LONG).show()
                 }
             }
+
+            // Set up review summary
+            val overallRating: Float = (info.overallRating * 10).roundToInt() / 10f
+            holder.overallRating.text = overallRating.toString()
+            holder.overallRatingBar.rating = overallRating
+            holder.numberRatings.text = info.numRatings.toString()
+
+            holder.noiseRating.text = when(info.noiseRating.roundToInt()) {
+                1 -> holder.itemView.context.getString(R.string.review_option_1)
+                2 -> holder.itemView.context.getString(R.string.review_option_2)
+                3 -> holder.itemView.context.getString(R.string.review_option_3)
+                4 -> holder.itemView.context.getString(R.string.review_option_4)
+                5 -> holder.itemView.context.getString(R.string.review_option_5)
+                else -> {
+                    ""
+                }
+            } + " noisy"
+            val noiseColorId = when(info.noiseRating.roundToInt()) {
+                1 -> R.color.color_scale_1
+                2 -> R.color.color_scale_2
+                3 -> R.color.color_scale_3
+                4 -> R.color.color_scale_4
+                5 -> R.color.color_scale_5
+                else -> {
+                    R.color.black
+                }
+            }
+            holder.noiseRating.setTextColor(ContextCompat.getColor(holder.itemView.context, noiseColorId))
+
+            holder.crowdRating.text = when(info.crowdRating.roundToInt()) {
+                1 -> holder.itemView.context.getString(R.string.review_option_1)
+                2 -> holder.itemView.context.getString(R.string.review_option_2)
+                3 -> holder.itemView.context.getString(R.string.review_option_3)
+                4 -> holder.itemView.context.getString(R.string.review_option_4)
+                5 -> holder.itemView.context.getString(R.string.review_option_5)
+                else -> {
+                    ""
+                }
+            } + " crowded"
+            val crowdColorId = when(info.crowdRating.roundToInt()) {
+                1 -> R.color.color_scale_1
+                2 -> R.color.color_scale_2
+                3 -> R.color.color_scale_3
+                4 -> R.color.color_scale_4
+                5 -> R.color.color_scale_5
+                else -> {
+                    R.color.black
+                }
+            }
+            holder.crowdRating.setTextColor(ContextCompat.getColor(holder.itemView.context, crowdColorId))
         } else if(holder is ReviewViewHolder) {
             firestore.collection("users")
                 .document(reviews[position - 1].userId)

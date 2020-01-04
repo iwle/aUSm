@@ -6,6 +6,65 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
+    <!--Ratings Layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/review_padding_bottom">
+
+        <!--Overall Rating-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/overall_rating_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/overall_rating_font_size" />
+
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/overall_rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/overall_rating_bar_size"
+                android:isIndicator="true" />
+
+            <TextView
+                android:id="@+id/number_ratings_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/number_ratings_font_size"/>
+
+        </LinearLayout>
+
+        <!--Other Ratings-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/noise_rating_text_view"
+                style="@style/RatingTextView" />
+
+            <TextView
+                android:id="@+id/crowd_rating_text_view"
+                style="@style/RatingTextView" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/ReviewDivider" />
+
     <!--Buttons Layout-->
     <LinearLayout
         android:layout_width="match_parent"
