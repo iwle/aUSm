@@ -113,6 +113,9 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
         // Set toolbar title
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
         collapsingToolbarLayout.title = establishment.name
     }
 
