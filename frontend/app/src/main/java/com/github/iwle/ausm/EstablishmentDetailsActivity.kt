@@ -1,5 +1,6 @@
 package com.github.iwle.ausm
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -14,6 +15,10 @@ import com.github.iwle.ausm.model.Establishment
 import com.github.iwle.ausm.model.Info
 import com.github.iwle.ausm.model.Review
 import com.github.iwle.ausm.model.User
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,6 +34,7 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
     private lateinit var reviewAdapter: ReviewAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var reviewList: ArrayList<Review>
+    private lateinit var placesClient: PlacesClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +43,8 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
         establishment = intent.getSerializableExtra("establishment") as Establishment
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
+        Places.initialize(applicationContext, getString(R.string.place_picker_places_key))
+        placesClient = Places.createClient(this)
 
         collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar_layout)
         toolbar = findViewById(R.id.toolbar)
@@ -75,6 +83,22 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
                     } else {
                         // Add mode
                         floatingActionButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.baseline_add_white_24))
+                        floatingActionButton.setOnClickListener {
+                            val placeFields = arrayListOf<Place.Field>(
+                                Place.Field.ID,
+                                Place.Field.ADDRESS,
+                                Place.Field.LAT_LNG,
+                                Place.Field.NAME,
+                                Place.Field.PHOTO_METADATAS,
+                                Place.Field.TYPES)
+                            val fetchPlaceRequest = FetchPlaceRequest.newInstance(establishment.placeId, placeFields)
+                            placesClient.fetchPlace(fetchPlaceRequest).addOnSuccessListener { fetchPlaceResponse ->
+                                val place = fetchPlaceResponse.place
+                                val intent = Intent(this, AddReviewActivity::class.java)
+                                intent.putExtra("place", place)
+                                startActivity(intent)
+                            }
+                        }
                     }
                 }
         }
