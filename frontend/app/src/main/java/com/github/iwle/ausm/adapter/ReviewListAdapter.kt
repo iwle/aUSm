@@ -31,7 +31,7 @@ class ReviewListAdapter(private val establishments: ArrayList<Establishment>) :
         // TODO: Picasso.get().load(establishments[position].imageUrl).into(holder.image)
         holder.name.text = establishments[position].name
         holder.location.text = establishments[position].address
-        holder.rating.text = establishments[position].rating.toString()
+        holder.rating.text = establishments[position].overallRating.toString()
     }
 
     override fun getItemCount(): Int {

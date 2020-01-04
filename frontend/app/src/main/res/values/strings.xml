@@ -43,4 +43,5 @@
     <string name="missing_rating_overall">Please give an overall rating</string>
     <string name="connection_failed">Failed to establish a connection to the server</string>
     <string name="review_already_exists">Cannot review the same place twice</string>
+    <string name="add_review_success">Review successfully added</string>
 </resources>

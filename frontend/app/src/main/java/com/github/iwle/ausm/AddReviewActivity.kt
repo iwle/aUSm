@@ -120,9 +120,41 @@ class AddReviewActivity : AppCompatActivity() {
             Log.i(TAG, "Successfully created new Review under Establishment")
             reviews.document(firebaseAuth.uid!!).set(review)
 
-            // Add Review reference to User
-            Log.i(TAG,"Successfully added reference to Review to User")
+            // Add Establishment reference to User
+            Log.i(TAG,"Successfully added reference to Establishment to User")
             users.document(firebaseAuth.uid!!).update("reviewsList", FieldValue.arrayUnion(place.id!!))
+
+            // Update aggregate data in Establishment
+            val establishmentReference = establishments.document(place.id!!)
+            firestore.runTransaction { transaction ->
+                transaction.get(establishmentReference) // Somehow removing this line causes the next line to return NPE
+                val establishment = transaction.get(establishmentReference).toObject(Establishment::class.java)!!
+
+                val oldNumReviews = establishment.numReviews
+                val newNumReviews = oldNumReviews + 1
+                val oldNoiseRatingTotal = establishment.noiseRating * oldNumReviews
+                val newNoiseRating = (oldNoiseRatingTotal + review.noiseRating) / newNumReviews
+                val oldCrowdRatingTotal = establishment.crowdRating * oldNumReviews
+                val newCrowdRating = (oldCrowdRatingTotal + review.crowdRating) / newNumReviews
+                val oldOverallRatingTotal = establishment.overallRating * oldNumReviews
+                val newOverallRating = (oldOverallRatingTotal + review.overallRating) / newNumReviews
+
+                establishment.numReviews = newNumReviews
+                establishment.noiseRating = newNoiseRating
+                establishment.crowdRating = newCrowdRating
+                establishment.overallRating = newOverallRating
+
+                transaction.set(establishmentReference, establishment)
+            }.addOnSuccessListener {
+                Log.i(TAG, "Successfully updated aggregate data in Establishment")
+            }.addOnFailureListener { exception ->
+                // Check Firestore update permissions
+                Log.e(TAG, "Failed to update aggregate data in Establishment: ", exception)
+            }
+
+            // Redirect user
+            Toast.makeText(this, R.string.add_review_success, Toast.LENGTH_LONG).show()
+            finish()
         }
 
         fun initialiseEstablishment() {
@@ -185,12 +217,12 @@ class AddReviewActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        Log.i(TAG, "Firestore query failed: ", task.exception)
+                        Log.e(TAG, "Firestore query failed: ", task.exception)
                     }
                 }
-                .addOnFailureListener {
+                .addOnFailureListener { exception ->
                     // Failed to query database
-                    Log.i(TAG, "Failed to contact Firestore")
+                    Log.e(TAG, "Failed to contact Firestore: ", exception)
                     Toast.makeText(this, R.string.connection_failed, Toast.LENGTH_LONG).show()
                 }
         }
