@@ -114,11 +114,7 @@
                 android:src="@drawable/baseline_access_time_white_24"/>
 
             <TextView
-                android:id="@+id/info_operating_status"
-                style="@style/DetailsInfoText"/>
-
-            <TextView
-                android:id="@+id/info_operating_hours"
+                android:id="@+id/info_opening_hours"
                 style="@style/DetailsInfoText"/>
 
         </LinearLayout>
@@ -135,7 +131,7 @@
                 android:src="@drawable/baseline_call_white_24"/>
 
             <TextView
-                android:id="@+id/bottom_sheet_info_telephone"
+                android:id="@+id/info_phone_number"
                 style="@style/DetailsInfoText"/>
 
         </LinearLayout>
@@ -152,7 +148,7 @@
                 android:src="@drawable/baseline_link_white_24"/>
 
             <TextView
-                android:id="@+id/bottom_sheet_info_website"
+                android:id="@+id/info_website"
                 style="@style/DetailsInfoText"/>
 
         </LinearLayout>

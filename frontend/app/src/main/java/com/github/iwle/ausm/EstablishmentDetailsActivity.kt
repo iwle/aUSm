@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iwle.ausm.adapter.ReviewAdapter
 import com.github.iwle.ausm.model.Establishment
+import com.github.iwle.ausm.model.Info
 import com.github.iwle.ausm.model.Review
 import com.github.iwle.ausm.model.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -43,7 +44,11 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
         floatingActionButton = findViewById(R.id.floating_action_button)
 
         reviewList = ArrayList()
-        reviewAdapter = ReviewAdapter(reviewList)
+        reviewAdapter = ReviewAdapter(Info(
+            establishment.address,
+            establishment.openingHours,
+            establishment.phoneNumber,
+            establishment.websiteUrl), reviewList)
         recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(this.context)
             adapter = reviewAdapter

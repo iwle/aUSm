@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iwle.ausm.R
+import com.github.iwle.ausm.model.Info
 import com.github.iwle.ausm.model.Review
 import com.google.firebase.firestore.FirebaseFirestore
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 class ReviewAdapter (
+    private val info: Info,
     private val reviews: ArrayList<Review>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -22,7 +24,10 @@ class ReviewAdapter (
     }
 
     class HeaderViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
+        val address: TextView = v.findViewById(R.id.info_address)
+        val openingHours: TextView = v.findViewById(R.id.info_opening_hours)
+        val phoneNumber: TextView = v.findViewById(R.id.info_phone_number)
+        val website: TextView = v.findViewById(R.id.info_website)
     }
 
     class ReviewViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -44,6 +49,14 @@ class ReviewAdapter (
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is HeaderViewHolder) {
+            val noInfo = holder.itemView.context.getString(R.string.info_unavailable)
+            holder.address.text = if(info.address != "") info.address else noInfo
+            holder.openingHours.text = if(info.openingHours != "")
+                info.openingHours.replace("[", "")
+                    .replace("]", "")
+                    .replace(", ", System.lineSeparator()) else noInfo
+            holder.phoneNumber.text = if(info.phoneNumber != "") info.phoneNumber else noInfo
+            holder.website.text = if(info.website != "") info.website else noInfo
 
         } else if(holder is ReviewViewHolder) {
             firestore.collection("users")
