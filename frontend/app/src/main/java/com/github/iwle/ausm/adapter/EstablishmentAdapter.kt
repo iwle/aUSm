@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.iwle.ausm.model.Establishment
 import com.github.iwle.ausm.R
 
-class ReviewListAdapter(
+class EstablishmentAdapter(
     private val establishments: ArrayList<Establishment>,
     private val clickListener: (Establishment) -> Unit
-) : RecyclerView.Adapter<ReviewListAdapter.CardViewHolder>() {
+) : RecyclerView.Adapter<EstablishmentAdapter.CardViewHolder>() {
     class CardViewHolder(private val v: View) : RecyclerView.ViewHolder(v) {
         val image: ImageView = v.findViewById(R.id.establishment_image)
         val name: TextView = v.findViewById(R.id.establishment_name)
@@ -32,7 +32,7 @@ class ReviewListAdapter(
         parent: ViewGroup,
         viewType: Int
     ): CardViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_card_review, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.card_establishment, parent, false)
         return CardViewHolder(v)
     }
 

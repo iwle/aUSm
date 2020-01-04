@@ -10,14 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.github.iwle.ausm.adapter.ReviewListAdapter
+import com.github.iwle.ausm.adapter.EstablishmentAdapter
 import com.github.iwle.ausm.model.Establishment
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var reviewListAdapter: ReviewListAdapter
+    private lateinit var establishmentAdapter: EstablishmentAdapter
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var firestore: FirebaseFirestore
     private lateinit var establishmentList: ArrayList<Establishment>
@@ -44,13 +44,13 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorSecondary)
         // Initialise reviewListAdapter
         establishmentList = ArrayList()
-        reviewListAdapter = ReviewListAdapter(establishmentList) { establishment: Establishment ->
+        establishmentAdapter = EstablishmentAdapter(establishmentList) { establishment: Establishment ->
             onEstablishmentClicked(establishment)
         }
         fetchData()
         recyclerView = v.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(this.context)
-            adapter = reviewListAdapter
+            adapter = establishmentAdapter
         }
         return v
     }
@@ -69,7 +69,7 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 establishmentList.add(establishment)
             }
             // Update reviewListAdapter
-            reviewListAdapter.notifyDataSetChanged()
+            establishmentAdapter.notifyDataSetChanged()
 
             // Stop the refresh animation
             val runnable = Runnable {
