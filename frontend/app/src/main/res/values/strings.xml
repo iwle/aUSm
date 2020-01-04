@@ -42,4 +42,5 @@
     <string name="missing_choice_crowd">Please select a crowd level</string>
     <string name="missing_rating_overall">Please give an overall rating</string>
     <string name="connection_failed">Failed to establish a connection to the server</string>
+    <string name="review_already_exists">Cannot review the same place twice</string>
 </resources>

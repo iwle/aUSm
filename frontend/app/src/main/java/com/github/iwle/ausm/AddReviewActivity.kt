@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.ByteArrayOutputStream
@@ -112,14 +113,34 @@ class AddReviewActivity : AppCompatActivity() {
         val reviews: CollectionReference = establishments
             .document(place.id!!)
             .collection("reviews")
+        val users: CollectionReference = firestore.collection("users")
 
         fun addReviewToEstablishment() {
+            // Create new Review under Establishment.Reviews
             Log.i(TAG, "Successfully created new Review under Establishment")
             reviews.document(firebaseAuth.uid!!).set(review)
+
+            // Add Review reference to User
+            Log.i(TAG,"Successfully added reference to Review to User")
+            users.document(firebaseAuth.uid!!).update("reviewsList", FieldValue.arrayUnion(place.id!!))
         }
 
         fun initialiseEstablishment() {
-            // Check if establishment exists in database
+            fun createEstablishment(imageB64: String = "") {
+                Log.i(TAG, "Successfully created new Establishment")
+                establishments.document(place.id!!).set(
+                    Establishment(
+                        place.name!!,
+                        place.address!!,
+                        place.latLng!!.latitude,
+                        place.latLng!!.longitude,
+                        imageB64
+                    )
+                )
+                addReviewToEstablishment()
+            }
+
+            // Check if Establishment exists in database
             establishments.document(place.id!!).get()
                 .addOnCompleteListener {task ->
                     if(task.isSuccessful) {
@@ -130,43 +151,38 @@ class AddReviewActivity : AppCompatActivity() {
                             addReviewToEstablishment()
                         } else {
                             Log.i(TAG, "Establishment does not exist in database")
-                            var imageB64 = ""
-                            // Get establishment photo
-                            val photoMetadata: PhotoMetadata = place.photoMetadatas!![0]
-                            val photoRequest: FetchPhotoRequest =
-                                FetchPhotoRequest.builder(photoMetadata)
-                                    .setMaxHeight(500)
-                                    .setMaxWidth(500)
-                                    .build()
-                            placesClient.fetchPhoto(photoRequest)
-                                .addOnSuccessListener { fetchPhotoResponse ->
-                                    Log.i(TAG, "Successfully fetched Google Place photo")
-                                    val bitmap: Bitmap = fetchPhotoResponse.bitmap
+                            var imageB64: String
+                            if(place.photoMetadatas != null) {
+                                // Get establishment photo
+                                val photoMetadata: PhotoMetadata = place.photoMetadatas!![0]
+                                val photoRequest: FetchPhotoRequest =
+                                    FetchPhotoRequest.builder(photoMetadata)
+                                        .setMaxHeight(500)
+                                        .setMaxWidth(500)
+                                        .build()
+                                placesClient.fetchPhoto(photoRequest)
+                                    .addOnSuccessListener { fetchPhotoResponse ->
+                                        Log.i(TAG, "Successfully fetched Google Place photo")
+                                        val bitmap: Bitmap = fetchPhotoResponse.bitmap
 
-                                    // Encode image to Base64
-                                    val byteArrayOutputStream = ByteArrayOutputStream()
-                                    bitmap.compress(
-                                        Bitmap.CompressFormat.PNG,
-                                        100,
-                                        byteArrayOutputStream
-                                    )
-                                    bitmap.recycle()
-                                    val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-                                    imageB64 = Base64.encodeToString(byteArray, Base64.URL_SAFE)
-
-                                    // Create establishment
-                                    Log.i(TAG, "Successfully created new Establishment")
-                                    establishments.document(place.id!!).set(
-                                        Establishment(
-                                            place.name!!,
-                                            place.address!!,
-                                            place.latLng!!.latitude,
-                                            place.latLng!!.longitude,
-                                            imageB64
+                                        // Encode image to Base64
+                                        val byteArrayOutputStream = ByteArrayOutputStream()
+                                        bitmap.compress(
+                                            Bitmap.CompressFormat.PNG,
+                                            100,
+                                            byteArrayOutputStream
                                         )
-                                    )
-                                    addReviewToEstablishment()
-                                }
+                                        bitmap.recycle()
+                                        val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+                                        imageB64 = Base64.encodeToString(byteArray, Base64.URL_SAFE)
+
+                                        // Create establishment
+                                        createEstablishment(imageB64)
+                                    }
+                            } else {
+                                // No photo
+                                createEstablishment()
+                            }
                         }
                     } else {
                         Log.i(TAG, "Firestore query failed: ", task.exception)
@@ -187,6 +203,7 @@ class AddReviewActivity : AppCompatActivity() {
                         if(document.exists()) {
                             // Review already exists
                             Log.i(TAG, "Review for Establishment already exists in database")
+                            Toast.makeText(this, R.string.review_already_exists, Toast.LENGTH_LONG).show()
                         } else {
                             // Review does not exist
                             Log.i(TAG, "Review for Establishment does not exist in databse")
