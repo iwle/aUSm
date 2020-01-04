@@ -48,4 +48,6 @@
     <string name="directions">Directions</string>
     <string name="website">Website</string>
     <string name="info_unavailable">Information unavailable</string>
+    <string name="call_unavailable">Phone number unavailable</string>
+    <string name="website_unavailable">Website unavailable</string>
 </resources>
