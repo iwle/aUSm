@@ -9,10 +9,11 @@
     <dimen name="card_padding">16dp</dimen>
     <dimen name="card_corner_radius">4dp</dimen>
     <dimen name="card_divider">5dp</dimen>
-    <dimen name="fab_margin">10dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
     <dimen name="add_review_margin">15dp</dimen>
     <dimen name="chip_group_margin">8dp</dimen>
     <dimen name="divider">1dp</dimen>
     <dimen name="category_font_size">20sp</dimen>
     <dimen name="text_area_size">200dp</dimen>
+    <dimen name="review_details_header_size">256dp</dimen>
 </resources>
