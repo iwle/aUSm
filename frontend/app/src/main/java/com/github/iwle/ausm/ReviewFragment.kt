@@ -11,11 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.github.iwle.ausm.adapter.ReviewListAdapter
 import com.github.iwle.ausm.model.Establishment
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var reviewListAdapter: ReviewListAdapter
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var establishmentList: ArrayList<Establishment>
+    private lateinit var establishments: CollectionReference
 
     companion object {
         fun newInstance() : ReviewFragment {
@@ -28,11 +33,17 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        firestore = FirebaseFirestore.getInstance()
+        establishments = firestore.collection("establishments")
+
         val v = inflater.inflate(R.layout.fragment_review, container, false)
         swipeRefreshLayout = v.findViewById(R.id.swipe_refresh_layout)
         swipeRefreshLayout.setOnRefreshListener(this)
         // Set refresh animation colour cycle
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorSecondary)
+        // Initialise reviewListAdapter
+        establishmentList = ArrayList()
+        reviewListAdapter = ReviewListAdapter(establishmentList)
         fetchData()
         recyclerView = v.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(this.context)
@@ -42,16 +53,23 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun fetchData() {
-        val data = ArrayList<Establishment>()
-        reviewListAdapter = ReviewListAdapter(data)
-
-        // Stop the refresh animation
-        val runnable = Runnable {
-            if(swipeRefreshLayout.isRefreshing) {
-                swipeRefreshLayout.isRefreshing = false
+        establishments.get().addOnSuccessListener { querySnapshot ->
+            establishmentList.clear()
+            for(documentSnapshot in querySnapshot) {
+                val establishment = documentSnapshot.toObject(Establishment::class.java)
+                establishmentList.add(establishment)
             }
+            // Update reviewListAdapter
+            reviewListAdapter.notifyDataSetChanged()
+
+            // Stop the refresh animation
+            val runnable = Runnable {
+                if(swipeRefreshLayout.isRefreshing) {
+                    swipeRefreshLayout.isRefreshing = false
+                }
+            }
+            Handler().postDelayed(runnable, 1000)
         }
-        Handler().postDelayed(runnable, 1000)
     }
 
     override fun onRefresh() {
