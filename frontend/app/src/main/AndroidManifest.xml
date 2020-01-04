@@ -16,9 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" ></activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".AddReviewActivity"></activity>
-        <activity android:name=".EstablishmentDetailsActivity"></activity>
+        <activity android:name=".EstablishmentDetailsActivity" android:theme="@style/AppTheme.NoActionBar.Translucent"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
