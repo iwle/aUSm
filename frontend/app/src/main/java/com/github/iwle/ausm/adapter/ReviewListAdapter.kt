@@ -11,13 +11,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.iwle.ausm.model.Establishment
 import com.github.iwle.ausm.R
 
-class ReviewListAdapter(private val establishments: ArrayList<Establishment>) :
-        RecyclerView.Adapter<ReviewListAdapter.CardViewHolder>() {
-    class CardViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+class ReviewListAdapter(
+    private val establishments: ArrayList<Establishment>,
+    private val clickListener: (Establishment) -> Unit
+) : RecyclerView.Adapter<ReviewListAdapter.CardViewHolder>() {
+    class CardViewHolder(private val v: View) : RecyclerView.ViewHolder(v) {
         val image: ImageView = v.findViewById(R.id.establishment_image)
         val name: TextView = v.findViewById(R.id.establishment_name)
         val address: TextView = v.findViewById(R.id.establishment_address)
         val rating: TextView = v.findViewById(R.id.establishment_rating)
+
+        fun bind(establishment: Establishment, clickListener: (Establishment) -> Unit) {
+            v.setOnClickListener {
+                clickListener(establishment)
+            }
+        }
     }
 
     override fun onCreateViewHolder(
@@ -29,6 +37,8 @@ class ReviewListAdapter(private val establishments: ArrayList<Establishment>) :
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
+        // Bind click listener
+        holder.bind(establishments[position], clickListener)
         // Decode Base64 String to Bitmap
         val imageBytes = Base64.decode(establishments[position].imageBase64, Base64.URL_SAFE)
         val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)

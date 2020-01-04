@@ -43,13 +43,19 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorSecondary)
         // Initialise reviewListAdapter
         establishmentList = ArrayList()
-        reviewListAdapter = ReviewListAdapter(establishmentList)
+        reviewListAdapter = ReviewListAdapter(establishmentList) { establishment: Establishment ->
+            onEstablishmentClicked(establishment)
+        }
         fetchData()
         recyclerView = v.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(this.context)
             adapter = reviewListAdapter
         }
         return v
+    }
+
+    private fun onEstablishmentClicked(establishment: Establishment) {
+        // TODO
     }
 
     private fun fetchData() {
