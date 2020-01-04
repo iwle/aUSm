@@ -102,7 +102,7 @@ class AddReviewActivity : AppCompatActivity() {
             } else if(overallRating == 0) {
                 Toast.makeText(this, R.string.missing_rating_overall, Toast.LENGTH_LONG).show()
             } else {
-                addReview(Review(noiseRating, crowdRating, overallRating, review))
+                addReview(Review(firebaseAuth.uid!!, noiseRating, crowdRating, overallRating, review))
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.github.iwle.ausm
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -114,6 +115,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initialiseNavigationDrawer() {
         // Attach navigation drawer
         setSupportActionBar(toolbar)

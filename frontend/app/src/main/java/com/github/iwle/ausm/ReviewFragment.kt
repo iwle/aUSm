@@ -68,7 +68,7 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 val establishment = documentSnapshot.toObject(Establishment::class.java)
                 establishmentList.add(establishment)
             }
-            // Update reviewListAdapter
+            // Update establishmentAdapter
             establishmentAdapter.notifyDataSetChanged()
 
             // Stop the refresh animation

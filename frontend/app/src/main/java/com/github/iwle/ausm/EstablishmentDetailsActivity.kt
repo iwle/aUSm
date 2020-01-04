@@ -45,6 +45,7 @@ class EstablishmentDetailsActivity : Activity() {
         }
 
         initialiseDetails()
+        fetchData()
     }
 
     private fun initialiseDetails() {
@@ -70,5 +71,22 @@ class EstablishmentDetailsActivity : Activity() {
         imageView.setImageBitmap(decodedImage)
 
         setFabAction()
+    }
+
+    private fun fetchData() {
+        firestore.collection("establishments")
+            .document(establishment.placeId)
+            .collection("reviews")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                reviewList.clear()
+                for(documentSnapshot in querySnapshot) {
+                    val review = documentSnapshot.toObject(Review::class.java)
+                    reviewList.add(review)
+                }
+
+                // Update reviewAdapter
+                reviewAdapter.notifyDataSetChanged()
+            }
     }
 }
