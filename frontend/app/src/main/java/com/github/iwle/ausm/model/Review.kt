@@ -1,5 +1,6 @@
 package com.github.iwle.ausm.model
 
+import java.io.Serializable
 import java.util.*
 
 data class Review(
@@ -9,4 +10,4 @@ data class Review(
     var crowdRating: Int = 0,
     var overallRating: Int = 0,
     var review: String = ""
-)
+) : Serializable

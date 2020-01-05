@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iwle.ausm.adapter.ReviewAdapter
 import com.github.iwle.ausm.model.Establishment
-import com.github.iwle.ausm.model.Info
+import com.github.iwle.ausm.model.EstablishmentDetails
 import com.github.iwle.ausm.model.Review
 import com.github.iwle.ausm.model.User
 import com.google.android.libraries.places.api.Places
@@ -52,7 +52,7 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
         floatingActionButton = findViewById(R.id.floating_action_button)
 
         reviewList = ArrayList()
-        reviewAdapter = ReviewAdapter(Info(
+        reviewAdapter = ReviewAdapter(EstablishmentDetails(
             establishment.overallRating,
             establishment.noiseRating,
             establishment.crowdRating,
@@ -81,7 +81,17 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
                         // Edit mode
                         floatingActionButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.baseline_edit_white_24))
                         floatingActionButton.setOnClickListener {
-                            startActivity(Intent(this, EditReviewActivity::class.java))
+                            firestore.collection("establishments")
+                                .document(establishment.placeId)
+                                .collection("reviews")
+                                .document(firebaseAuth.uid!!)
+                                .get()
+                                .addOnSuccessListener { documentSnapshot ->
+                                    val intent = Intent(this, EditReviewActivity::class.java)
+                                    val review = documentSnapshot.toObject(Review::class.java)
+                                    intent.putExtra("review", review)
+                                    startActivity(intent)
+                                }
                         }
                     } else {
                         // Add mode

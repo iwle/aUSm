@@ -1,6 +1,6 @@
 package com.github.iwle.ausm.model
 
-data class Info(
+data class EstablishmentDetails(
     var overallRating: Float,
     var noiseRating: Float,
     var crowdRating: Float,

@@ -9,11 +9,13 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.github.iwle.ausm.model.Review
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 class EditReviewActivity : AppCompatActivity() {
+    private lateinit var review: Review
     private lateinit var noiseChipGroup: ChipGroup
     private lateinit var crowdChipGroup: ChipGroup
     private lateinit var addReviewButton: Button
@@ -24,6 +26,7 @@ class EditReviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_review)
+        review = intent.getSerializableExtra("review") as Review
 
         noiseChipGroup = findViewById(R.id.noise_chip_group)
         crowdChipGroup = findViewById(R.id.crowd_chip_group)

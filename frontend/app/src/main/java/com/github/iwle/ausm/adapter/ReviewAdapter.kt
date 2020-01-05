@@ -12,9 +12,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iwle.ausm.R
-import com.github.iwle.ausm.model.Info
+import com.github.iwle.ausm.model.EstablishmentDetails
 import com.github.iwle.ausm.model.Review
-import com.google.common.math.DoubleMath.roundToInt
 import com.google.firebase.firestore.FirebaseFirestore
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.text.SimpleDateFormat
@@ -23,7 +22,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 class ReviewAdapter (
-    private val info: Info,
+    private val establishmentDetails: EstablishmentDetails,
     private val reviews: ArrayList<Review>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -72,18 +71,18 @@ class ReviewAdapter (
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is HeaderViewHolder) {
             val noInfo = holder.itemView.context.getString(R.string.info_unavailable)
-            holder.address.text = if(info.address != "") info.address else noInfo
-            holder.openingHours.text = if(info.openingHours != "")
-                info.openingHours.replace("[", "")
+            holder.address.text = if(establishmentDetails.address != "") establishmentDetails.address else noInfo
+            holder.openingHours.text = if(establishmentDetails.openingHours != "")
+                establishmentDetails.openingHours.replace("[", "")
                     .replace("]", "")
                     .replace(", ", System.lineSeparator()) else noInfo
-            holder.phoneNumber.text = if(info.phoneNumber != "") info.phoneNumber else noInfo
-            holder.website.text = if(info.website != "") info.website else noInfo
+            holder.phoneNumber.text = if(establishmentDetails.phoneNumber != "") establishmentDetails.phoneNumber else noInfo
+            holder.website.text = if(establishmentDetails.website != "") establishmentDetails.website else noInfo
 
             // Set up call button
-            if(info.phoneNumber != "") {
+            if(establishmentDetails.phoneNumber != "") {
                 val callIntent = Intent(Intent.ACTION_DIAL)
-                callIntent.data = Uri.parse("tel:" + info.phoneNumber)
+                callIntent.data = Uri.parse("tel:" + establishmentDetails.phoneNumber)
                 holder.callButton.setOnClickListener {
                     holder.itemView.context.startActivity(callIntent)
                 }
@@ -95,15 +94,15 @@ class ReviewAdapter (
 
             // Set up directions button
             val directionsIntent = Intent(Intent.ACTION_VIEW)
-            directionsIntent.data = Uri.parse("google.navigation:q=" + info.address.replace(" ", "+"))
+            directionsIntent.data = Uri.parse("google.navigation:q=" + establishmentDetails.address.replace(" ", "+"))
             holder.directionsButton.setOnClickListener {
                 holder.itemView.context.startActivity(directionsIntent)
             }
 
             // Set up website button
-            if(info.website != "") {
+            if(establishmentDetails.website != "") {
                 val websiteIntent = Intent(Intent.ACTION_VIEW)
-                websiteIntent.data = Uri.parse(info.website)
+                websiteIntent.data = Uri.parse(establishmentDetails.website)
                 holder.websiteButton.setOnClickListener {
                     holder.itemView.context.startActivity(websiteIntent)
                 }
@@ -114,12 +113,12 @@ class ReviewAdapter (
             }
 
             // Set up review summary
-            val overallRating: Float = (info.overallRating * 10).roundToInt() / 10f
+            val overallRating: Float = (establishmentDetails.overallRating * 10).roundToInt() / 10f
             holder.overallRating.text = overallRating.toString()
             holder.overallRatingBar.rating = overallRating
-            holder.numberRatings.text = info.numRatings.toString()
+            holder.numberRatings.text = establishmentDetails.numRatings.toString()
 
-            holder.noiseRating.text = when(info.noiseRating.roundToInt()) {
+            holder.noiseRating.text = when(establishmentDetails.noiseRating.roundToInt()) {
                 1 -> holder.itemView.context.getString(R.string.review_option_1)
                 2 -> holder.itemView.context.getString(R.string.review_option_2)
                 3 -> holder.itemView.context.getString(R.string.review_option_3)
@@ -129,7 +128,7 @@ class ReviewAdapter (
                     ""
                 }
             } + " noisy"
-            val noiseColorId = when(info.noiseRating.roundToInt()) {
+            val noiseColorId = when(establishmentDetails.noiseRating.roundToInt()) {
                 1 -> R.color.color_scale_1
                 2 -> R.color.color_scale_2
                 3 -> R.color.color_scale_3
@@ -141,7 +140,7 @@ class ReviewAdapter (
             }
             holder.noiseRating.setTextColor(ContextCompat.getColor(holder.itemView.context, noiseColorId))
 
-            holder.crowdRating.text = when(info.crowdRating.roundToInt()) {
+            holder.crowdRating.text = when(establishmentDetails.crowdRating.roundToInt()) {
                 1 -> holder.itemView.context.getString(R.string.review_option_1)
                 2 -> holder.itemView.context.getString(R.string.review_option_2)
                 3 -> holder.itemView.context.getString(R.string.review_option_3)
@@ -151,7 +150,7 @@ class ReviewAdapter (
                     ""
                 }
             } + " crowded"
-            val crowdColorId = when(info.crowdRating.roundToInt()) {
+            val crowdColorId = when(establishmentDetails.crowdRating.roundToInt()) {
                 1 -> R.color.color_scale_1
                 2 -> R.color.color_scale_2
                 3 -> R.color.color_scale_3
