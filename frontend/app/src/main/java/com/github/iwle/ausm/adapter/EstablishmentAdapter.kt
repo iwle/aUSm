@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iwle.ausm.model.Establishment
 import com.github.iwle.ausm.R
+import kotlin.math.roundToInt
 
 class EstablishmentAdapter(
     private val establishments: ArrayList<Establishment>,
@@ -46,7 +47,7 @@ class EstablishmentAdapter(
 
         holder.name.text = establishments[position].name
         holder.address.text = establishments[position].address
-        holder.rating.text = establishments[position].overallRating.toString()
+        holder.rating.text = ((establishments[position].overallRating * 10).roundToInt() / 10f).toString()
     }
 
     override fun getItemCount(): Int {
