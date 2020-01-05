@@ -62,7 +62,7 @@ class EstablishmentAdapter(
             establishments[position].latitude,
             establishments[position].longitude)
         if(distance >= 1000) {
-            holder.distance.text = "${(distance / 1000.0)}km"
+            holder.distance.text = "${(distance / 100 / 10.0)}km"
         } else {
             holder.distance.text = "${distance}m"
         }

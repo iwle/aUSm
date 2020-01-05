@@ -1,5 +1,6 @@
 package com.github.iwle.ausm.comparator
 
+import android.location.Location
 import com.github.iwle.ausm.model.Establishment
 import com.google.android.gms.maps.model.LatLng
 import kotlin.math.*
@@ -16,11 +17,9 @@ class EstablishmentLocationComparator(val latLng: LatLng) : Comparator<Establish
         return (distanceToEstablishment1 - distanceToEstablishment2).toInt()
     }
 
-    private fun distance(fromLat: Double, fromLng: Double, toLat: Double, toLng: Double): Double {
-        val radius = 6378137.0
-        val deltaLat = toLat - fromLat
-        val deltaLng = toLng - fromLng
-        val angle = 2 * asin(sqrt(sin(deltaLat / 2).pow(2))) + cos(fromLat) * cos(toLat) * sin(deltaLng / 2).pow(2)
-        return radius * angle
+    private fun distance(fromLat: Double, fromLng: Double, toLat: Double, toLng: Double): Float {
+        val distance = FloatArray(2)
+        Location.distanceBetween(fromLat, fromLng, toLat, toLng, distance)
+        return distance[0]
     }
 }
