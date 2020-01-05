@@ -63,12 +63,24 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/baseline_star_white_18"
+                        android:src="@drawable/baseline_star_white_24"
                         android:tint="@color/colorPrimary"
                         android:paddingRight="@dimen/establishment_icon_padding"/>
 
                     <TextView
                         android:id="@+id/establishment_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/baseline_location_on_white_24"
+                        android:tint="@color/colorPrimary"
+                        android:paddingRight="@dimen/establishment_icon_padding"/>
+
+                    <TextView
+                        android:id="@+id/establishment_distance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 

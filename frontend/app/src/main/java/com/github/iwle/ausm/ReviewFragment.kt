@@ -87,7 +87,6 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 val establishment = documentSnapshot.toObject(Establishment::class.java)
                 establishmentList.add(establishment)
             }
-
             getLastLocation()
         }
     }
@@ -125,8 +124,12 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 fusedLocationClient.lastLocation.addOnCompleteListener(this.activity as Activity) { task ->
                     var location: Location? = task.result
                     if(location != null) {
+                        val currentLocation = LatLng(location.latitude, location.longitude)
+
                         // Sort establishmentList by distance from current location
-                        establishmentList.sortWith(EstablishmentLocationComparator(LatLng(location.latitude, location.longitude)))
+                        establishmentList.sortWith(EstablishmentLocationComparator(currentLocation))
+
+                        establishmentAdapter.currentLocation = currentLocation
 
                         // Update establishmentAdapter
                         establishmentAdapter.notifyDataSetChanged()
