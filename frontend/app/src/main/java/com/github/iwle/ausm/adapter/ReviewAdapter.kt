@@ -54,6 +54,8 @@ class ReviewAdapter (
         val name: TextView = v.findViewById(R.id.name_text_view)
         val ratingBar: MaterialRatingBar = v.findViewById(R.id.rating_bar)
         val date: TextView = v.findViewById(R.id.date_text_view)
+        val noiseRating: TextView = v.findViewById(R.id.noise_rating_text_view)
+        val crowdRating: TextView = v.findViewById(R.id.crowd_rating_text_view)
         val review: TextView = v.findViewById(R.id.review_text_view)
     }
 
@@ -174,6 +176,51 @@ class ReviewAdapter (
             holder.date.text = simpleDateFormat.format(reviews[position - 1].date)
             holder.ratingBar.rating = reviews[position - 1].overallRating.toFloat()
             holder.review.text = reviews[position - 1].review
+
+            holder.noiseRating.text = when(reviews[position - 1].noiseRating) {
+                1 -> holder.itemView.context.getString(R.string.review_option_1)
+                2 -> holder.itemView.context.getString(R.string.review_option_2)
+                3 -> holder.itemView.context.getString(R.string.review_option_3)
+                4 -> holder.itemView.context.getString(R.string.review_option_4)
+                5 -> holder.itemView.context.getString(R.string.review_option_5)
+                else -> {
+                    ""
+                }
+            } + " noisy"
+            val noiseColorId = when(reviews[position - 1].noiseRating) {
+                1 -> R.color.color_scale_1
+                2 -> R.color.color_scale_2
+                3 -> R.color.color_scale_3
+                4 -> R.color.color_scale_4
+                5 -> R.color.color_scale_5
+                else -> {
+                    R.color.black
+                }
+            }
+            holder.noiseRating.setTextColor(ContextCompat.getColor(holder.itemView.context, noiseColorId))
+
+            holder.crowdRating.text = when(reviews[position - 1].crowdRating) {
+                1 -> holder.itemView.context.getString(R.string.review_option_1)
+                2 -> holder.itemView.context.getString(R.string.review_option_2)
+                3 -> holder.itemView.context.getString(R.string.review_option_3)
+                4 -> holder.itemView.context.getString(R.string.review_option_4)
+                5 -> holder.itemView.context.getString(R.string.review_option_5)
+                else -> {
+                    ""
+                }
+            } + " crowded"
+            val crowdColorId = when(reviews[position - 1].crowdRating) {
+                1 -> R.color.color_scale_1
+                2 -> R.color.color_scale_2
+                3 -> R.color.color_scale_3
+                4 -> R.color.color_scale_4
+                5 -> R.color.color_scale_5
+                else -> {
+                    R.color.black
+                }
+            }
+            holder.crowdRating.setTextColor(ContextCompat.getColor(holder.itemView.context, crowdColorId))
+
             // Hide review text view if there is no written review
             if(holder.review.text == "") {
                 holder.review.visibility = View.GONE

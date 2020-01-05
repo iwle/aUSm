@@ -43,10 +43,27 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/noise_rating_text_view"
+                style="@style/RatingTextViewSmall" />
+
+            <TextView
+                android:id="@+id/crowd_rating_text_view"
+                style="@style/RatingTextViewSmall"
+                android:paddingLeft="10dp"/>
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/review_text_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp" />
 
     </LinearLayout>
 
