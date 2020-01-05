@@ -134,6 +134,9 @@ class ReviewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         // Update establishmentAdapter
                         establishmentAdapter.notifyDataSetChanged()
 
+                        // Play animation
+                        recyclerView.scheduleLayoutAnimation()
+
                         // Stop the refresh animation
                         val runnable = Runnable {
                             if(swipeRefreshLayout.isRefreshing) {
