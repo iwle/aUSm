@@ -13,25 +13,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <com.github.iwle.ausm.SquareImageView
+            android:id="@+id/establishment_image"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3">
-
-            <ImageView
-                android:id="@+id/establishment_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true" />
-
-        </RelativeLayout>
+            android:layout_weight="0.3"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true" />
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.7"
-            android:layout_marginLeft="@dimen/card_divider">
+            android:paddingLeft="@dimen/establishment_padding_left"
+            android:paddingRight="@dimen/establishment_padding_right"
+            android:paddingTop="@dimen/establishment_padding_top"
+            android:paddingBottom="@dimen/establishment_padding_bottom">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -40,12 +37,14 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/establishment_text_padding_left">
 
                     <TextView
                         android:id="@+id/establishment_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/establishment_address"
@@ -66,8 +65,7 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/baseline_star_white_18"
                         android:tint="@color/colorPrimary"
-                        android:scaleType="fitCenter"
-                        android:adjustViewBounds="true" />
+                        android:paddingRight="@dimen/establishment_icon_padding"/>
 
                     <TextView
                         android:id="@+id/establishment_rating"
