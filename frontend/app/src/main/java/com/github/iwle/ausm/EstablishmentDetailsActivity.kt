@@ -132,6 +132,9 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
             onBackPressed()
         }
         collapsingToolbarLayout.title = establishment.name
+
+        // Set status bar colour
+        collapsingToolbarLayout.setStatusBarScrimColor(ContextCompat.getColor(this, R.color.colorPrimary))
     }
 
     private fun fetchData() {

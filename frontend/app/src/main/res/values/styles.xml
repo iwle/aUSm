@@ -32,14 +32,20 @@
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
+        <item name="windowActionBarOverlay">true</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryVariant</item>
     </style>
 
     <style name="AppTheme.NoActionBar.Translucent" parent="AppTheme.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
     <style name="NavigationDrawerHeaderTextView" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
