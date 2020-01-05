@@ -90,6 +90,8 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
                                     val intent = Intent(this, EditReviewActivity::class.java)
                                     val review = documentSnapshot.toObject(Review::class.java)
                                     intent.putExtra("review", review)
+                                    intent.putExtra("placeId", establishment.placeId)
+                                    intent.putExtra("userId", firebaseAuth.uid)
                                     startActivity(intent)
                                 }
                         }
