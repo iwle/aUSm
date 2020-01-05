@@ -3,7 +3,6 @@ package com.github.iwle.ausm.comparator
 import android.location.Location
 import com.github.iwle.ausm.model.Establishment
 import com.google.android.gms.maps.model.LatLng
-import kotlin.math.*
 
 class EstablishmentLocationComparator(val latLng: LatLng) : Comparator<Establishment> {
     override fun compare(establishment1: Establishment, establishment2: Establishment): Int {

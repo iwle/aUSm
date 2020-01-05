@@ -3,6 +3,7 @@ package com.github.iwle.ausm
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -28,8 +29,10 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -234,8 +237,42 @@ class AddReviewActivity : AppCompatActivity() {
                                         createEstablishment(imageB64)
                                     }
                             } else {
-                                // No photo
-                                createEstablishment()
+                                // No photo - use static map instead
+                                val PLACE_IMG_WIDTH = 640
+                                val PLACE_IMG_HEIGHT = 500
+                                val STATIC_MAP_URL = "https://maps.googleapis.com/maps/api/staticmap?" +
+                                        "size=${PLACE_IMG_WIDTH}x$PLACE_IMG_HEIGHT" +
+                                        "&markers=color:red|%.6f,%.6f" +
+                                        "&key=%s"
+                                val mapUrl = STATIC_MAP_URL
+                                    .format(place.latLng!!.latitude,
+                                        place.latLng!!.longitude,
+                                        resources.getString(R.string.place_picker_maps_key))
+                                Picasso.get().load(mapUrl).into(object : com.squareup.picasso.Target {
+                                    override fun onBitmapLoaded(
+                                        bitmap: Bitmap?,
+                                        from: Picasso.LoadedFrom?
+                                    ) {
+                                        // Encode image to Base64
+                                        val byteArrayOutputStream = ByteArrayOutputStream()
+                                        bitmap!!.compress(
+                                            Bitmap.CompressFormat.PNG,
+                                            100,
+                                            byteArrayOutputStream
+                                        )
+                                        val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+                                        imageB64 = Base64.encodeToString(byteArray, Base64.URL_SAFE)
+
+                                        createEstablishment(imageB64)
+                                    }
+
+                                    override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+
+                                    override fun onBitmapFailed(
+                                        e: Exception?,
+                                        errorDrawable: Drawable?
+                                    ) {}
+                                })
                             }
                         }
                     } else {
