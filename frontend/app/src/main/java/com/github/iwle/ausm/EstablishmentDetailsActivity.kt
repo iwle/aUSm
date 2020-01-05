@@ -80,6 +80,9 @@ class EstablishmentDetailsActivity : AppCompatActivity() {
                     if(user.reviewsList.contains(establishment.placeId)) {
                         // Edit mode
                         floatingActionButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.baseline_edit_white_24))
+                        floatingActionButton.setOnClickListener {
+                            startActivity(Intent(this, EditReviewActivity::class.java))
+                        }
                     } else {
                         // Add mode
                         floatingActionButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.baseline_add_white_24))

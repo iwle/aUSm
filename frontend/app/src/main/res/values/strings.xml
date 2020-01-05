@@ -29,6 +29,7 @@
     <string name="tab_gps">GPS Tracker</string>
     <string name="tab_reviews">Reviews</string>
     <string name="add_review">Add Review</string>
+    <string name="edit_review">Edit Review</string>
     <string name="review_option_1">Not at all</string>
     <string name="review_option_2">Slightly</string>
     <string name="review_option_3">Moderately</string>
@@ -38,6 +39,7 @@
     <string name="review_category_crowd">How crowded is this place?</string>
     <string name="review_category_overall">How would you rate this place overall?</string>
     <string name="text_area_review">Review</string>
+    <string name="save_changes">Save Changes</string>
     <string name="missing_choice_noise">Please select a noise level</string>
     <string name="missing_choice_crowd">Please select a crowd level</string>
     <string name="missing_rating_overall">Please give an overall rating</string>
