@@ -30,6 +30,8 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import java.io.ByteArrayOutputStream
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AddReviewActivity : AppCompatActivity() {
     private val TAG: String = "DatabaseConnection"
@@ -103,7 +105,7 @@ class AddReviewActivity : AppCompatActivity() {
             } else if(overallRating == 0) {
                 Toast.makeText(this, R.string.missing_rating_overall, Toast.LENGTH_LONG).show()
             } else {
-                addReview(Review(firebaseAuth.uid!!, noiseRating, crowdRating, overallRating, review))
+                addReview(Review(firebaseAuth.uid!!, Calendar.getInstance().time, noiseRating, crowdRating, overallRating, review))
             }
         }
     }

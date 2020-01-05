@@ -17,6 +17,9 @@ import com.github.iwle.ausm.model.Review
 import com.google.common.math.DoubleMath.roundToInt
 import com.google.firebase.firestore.FirebaseFirestore
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 class ReviewAdapter (
@@ -166,6 +169,9 @@ class ReviewAdapter (
                     val lastName = documentSnapshot.getString("lastName")
                     holder.name.text = "$firstName $lastName"
                 }
+            val simpleDateFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
+            simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT")
+            holder.date.text = simpleDateFormat.format(reviews[position - 1].date)
             holder.ratingBar.rating = reviews[position - 1].overallRating.toFloat()
             holder.review.text = reviews[position - 1].review
             // Hide review text view if there is no written review
